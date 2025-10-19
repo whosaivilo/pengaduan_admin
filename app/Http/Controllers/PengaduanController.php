@@ -12,9 +12,9 @@ class PengaduanController extends Controller
     public function index()
     {
         $pengaduan = [
-            ['judul' => 'Jalan rusak di RT 02', 'status' => 'Menunggu'],
-            ['judul' => 'Lampu jalan mati', 'status' => 'Diproses'],
-            ['judul' => 'Sampah menumpuk di RW 05', 'status' => 'Selesai'],
+            // ['judul' => 'Jalan rusak di RT 02', 'status' => 'Menunggu'],
+            // ['judul' => 'Lampu jalan mati', 'status' => 'Diproses'],
+            // ['judul' => 'Sampah menumpuk di RW 05', 'status' => 'Selesai'],
         ];
 
         // Passing data ke view
