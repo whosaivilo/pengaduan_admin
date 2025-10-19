@@ -145,6 +145,7 @@ class PengaduanController extends Controller
         $pengaduan   = Pengaduan::findOrFail($pengaduan_id);
         $nomor_tiket = $pengaduan->nomor_tiket; // Ambil nomor tiket untuk pesan sukses
 
+
         // 2. HAPUS FILE TERTANAM
         if ($pengaduan->lampiran_bukti) {
             $filePath = str_replace('storage/', 'public/', $pengaduan->lampiran_bukti);
