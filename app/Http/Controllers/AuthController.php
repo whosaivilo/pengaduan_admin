@@ -20,7 +20,12 @@ class AuthController extends Controller
         $request->validate([
             // 'name'     => 'required|string|max:100',
             'email'    => 'required|email',
-            'password' => 'required',
+            'password' => 'required|min:6',
+        ] ,[
+            'email.required'    => 'Email wajib diisi',
+            'email.email'       => 'Format email tidak valid',
+            'password.required' => 'Password wajib diisi',
+            'password.min'      => 'Password minimal 6 karakter',
         ]);
 
         // if ($request->email == 'theresaoliviaa@gmail.com' && $request->password == 'There123') {
@@ -41,7 +46,7 @@ class AuthController extends Controller
         if ($users && Hash::check($request->password, $users->password)) {
             Auth::login($users);
 
-            return redirect()->route('dashboard')->with('success', "Login Berhasil! Selamat datang {$users->email}");
+            return redirect()->route('dashboard')->with('success', "Login Berhasil! Selamat datang " . $users->email);
         }
             return redirect()->back()->with('error', 'Login Gagal! Periksa kembali username dan password Anda.'); //Login gagal
     }
