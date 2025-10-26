@@ -23,10 +23,13 @@ class Pengaduan extends Model
         'rw',
         'lampiran_bukti'
     ];
-    // Relasi: Setiap pengaduan dimiliki oleh satu Warga
-    public function warga(): BelongsTo
+
+   // Relasi wajib (Dipanggil di DashboardController)
+    public function warga()
     {
-        // Sesuaikan dengan nama Primary Key 'warga_id'
-        return $this->belongsTo(Warga::class, 'warga_id', 'warga_id');
+        return $this->belongsTo(Warga::class, 'warga_id','warga_id');
     }
+
+
+
 }

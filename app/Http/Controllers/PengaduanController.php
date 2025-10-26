@@ -13,21 +13,8 @@ class PengaduanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        // 1. Ambil Data Statistik (untuk Card)
-        $total_masuk       = Pengaduan::count();
-        $belum_diproses    = Pengaduan::where('status', 'Baru')->count();
-        $selesai_ditangani = Pengaduan::where('status', 'Selesai')->count();
 
-        // 2. Ambil Data Tabel (Hanya 5 Terbaru)
-        $pengaduan_terbaru = Pengaduan::with('warga')->latest()->take(5)->get();
-
-        // 3. Kirim semua data ke view
-        return view('admin.index', compact('total_masuk', 'belum_diproses', 'selesai_ditangani', 'pengaduan_terbaru'));
-    }
-
-    public function lihat() //[route: pengaduan.index]
+    public function index() //[route: pengaduan.index]
     {
         // Mengambil semua data pengaduan, sekaligus memuat (with('warga')) data pelapor untuk efisiensi
         $semua_pengaduan = Pengaduan::with('warga')->latest()->get();
@@ -41,7 +28,8 @@ class PengaduanController extends Controller
      */
     public function create()
     {
-        return view('admin.pengaduan.create');
+        $semua_warga = Warga::all();
+        return view('admin.pengaduan.create', compact('semua_warga'));
     }
 
     /**
@@ -49,7 +37,7 @@ class PengaduanController extends Controller
      */
     public function show($pengaduan_id)
     {
-        // Ambil data pengaduan, termasuk data warga (relasi)
+        // Ambil data pengaduan, termasuk data warga dan kategori  (relasi)
         $pengaduan = Pengaduan::with('warga')->findOrFail($pengaduan_id);
 
         // Tampilkan view detail (misalnya resources/views/admin/pengaduan/show.blade.php)
@@ -79,6 +67,8 @@ class PengaduanController extends Controller
 
         // Simpan data Tindak Lanjut dan ubah status
         $pengaduan->status = $request->status;
+
+        //simpan perubahan status
         $pengaduan->save();
 
         return redirect()->route('pengaduan.index')->with('success', 'Status dan Tindak Lanjut berhasil diperbarui menjadi **' . $pengaduan->status . '**.');
@@ -89,6 +79,7 @@ class PengaduanController extends Controller
     {
 
         $validatedData = $request->validate([
+            'warga_id'       => 'required|integer|exists:warga,warga_id',
             'judul'          => 'required|string|max:255',
             'kategori_id'    => 'required|integer|in:1,2,3',
             'deskripsi'      => 'required|string',
@@ -98,14 +89,7 @@ class PengaduanController extends Controller
             'lampiran_bukti' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
-        // 2. TENTUKAN WARGA ID (Perbaikan FK)
-        $wargaPertama = Warga::first();
-
-        if (! $wargaPertama) {
-            // Jika tidak ada data warga, batalkan dan kembalikan error
-            return redirect()->back()->withInput()->with('error', 'Gagal: Tidak dapat menemukan data Warga. Mohon daftarkan Warga terlebih dahulu.');
-        }
-        $wargaId = $wargaPertama->warga_id;
+        $wargaId = $validatedData['warga_id']; // Ganti dengan logika otentikasi jika ada
 
         // 3. HANDLE FILE UPLOAD
         $filePath = null;
@@ -137,14 +121,11 @@ class PengaduanController extends Controller
         // 6. REDIRECT & FLASH DATA
         return redirect()->route('pengaduan.index')->with('success', 'Pengaduan dengan nomor tiket **' . $nomorTiket . '** berhasil diajukan!');
     }
-    /**
-     * Remove the specified resource from storage.
-     */
+
     public function destroy($pengaduan_id)
     {
         $pengaduan   = Pengaduan::findOrFail($pengaduan_id);
         $nomor_tiket = $pengaduan->nomor_tiket; // Ambil nomor tiket untuk pesan sukses
-
 
         // 2. HAPUS FILE TERTANAM
         if ($pengaduan->lampiran_bukti) {
@@ -159,23 +140,5 @@ class PengaduanController extends Controller
         return redirect()->route('pengaduan.index')
             ->with('success', 'Pengaduan dengan nomor tiket **' . $nomor_tiket . '** berhasil dihapus, dan lampiran bukti telah dihapus!');
     }
-    public function updateStatus(Request $request, $pengaduan_id)
-    {
-        $pengaduan = Pengaduan::findOrFail($pengaduan_id);
 
-        // 1. VALIDATION untuk data Tindak Lanjut
-        $request->validate([
-            'catatan_tindak_lanjut' => 'nullable|string',
-            'status'                => 'required|in:Baru,Diproses,Selesai',
-        ]);
-
-        // 2. Simpan perubahan status
-        $pengaduan->status = $request->status;
-
-        $pengaduan->save(); // Simpan perubahan status
-
-        // 3. Redirect dan Flash Data
-        return redirect()->route('pengaduan.show', $pengaduan->pengaduan_id)
-            ->with('success', 'Status pengaduan berhasil diperbarui menjadi **' . $pengaduan->status . '**!');
-    }
 }

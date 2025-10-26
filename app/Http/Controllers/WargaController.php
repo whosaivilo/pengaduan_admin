@@ -1,8 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Warga;
+use Illuminate\Http\Request;
 
 class WargaController extends Controller
 {
@@ -50,9 +50,12 @@ class WargaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($warga_id)
     {
-        //
+        $warga = Warga::findOrFail($warga_id);
+
+        // Mengirim objek $warga ke view detail
+        return view('admin.warga.show', compact('warga'));
     }
 
     /**
@@ -75,37 +78,41 @@ class WargaController extends Controller
     public function update(Request $request, $warga_id) //[route: warga.update]
     {
         // 1. Cari data Warga yang akan diupdate
-    $warga = Warga::findOrFail($warga_id);
+        $warga = Warga::findOrFail($warga_id);
 
-    // 2. VALIDATION (Wajib Tugas)
-    //    Penting: Tambahkan pengecualian unik untuk NIK (no_ktp)
-    $validated = $request->validate([
-        // Abaikan NIK (no_ktp) yang sedang diedit (PK adalah warga_id)
-        'no_ktp' => 'required|digits:16|unique:warga,no_ktp,'.$warga_id.',warga_id',
-        'nama' => 'required|string|max:100',
-        // ... (Kolom lainnya) ...
-    ]);
+        // 2. VALIDATION (Wajib Tugas)
+        //    Penting: Tambahkan pengecualian unik untuk NIK (no_ktp)
+        $validated = $request->validate([
+            // Abaikan NIK (no_ktp) yang sedang diedit (PK adalah warga_id)
+            'no_ktp'        => 'required|digits:16|unique:warga,no_ktp,' . $warga_id . ',warga_id',
+            'nama'          => 'required|string|max:100',
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
+            'agama'         => 'required|string|max:20',
+            'pekerjaan'     => 'required|string|max:50',
+            'telp'          => 'required|string|max:15',
+            'email'         => 'nullable|email',
+        ]);
 
-    // 3. Simpan Perubahan ke Database
-    $warga->update($validated);
+            // 3. Simpan Perubahan ke Database
+            $warga->update($validated);
 
-    // 4. REDIRECT & FLASH DATA (Wajib Tugas)
-    return redirect()->route('warga.index')->with('success', 'Data warga **' . $warga->nama . '** berhasil diperbarui!');
-    }
+            // 4. REDIRECT & FLASH DATA (Wajib Tugas)
+            return redirect()->route('warga.index')->with('success', 'Data warga **' . $warga->nama . '** berhasil diperbarui!');
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($warga_id)
+            /**
+             * Remove the specified resource from storage.
+             */
+            public function destroy($warga_id)
     {
-        // 1. Cari data Warga yang akan dihapus
-    $warga = Warga::findOrFail($warga_id);
-    $nama_warga = $warga->nama; // Simpan nama untuk Flash Data
+                // 1. Cari data Warga yang akan dihapus
+                $warga = Warga::findOrFail($warga_id);
+                // $nama_warga = $warga->nama; // Simpan nama untuk Flash Data
 
-    // 2. Hapus Data
-    $warga->delete();
+                // 2. Hapus Data
+                $warga->delete();
 
-    // 3. REDIRECT & FLASH DATA (Wajib Tugas)
-    return redirect()->route('warga.index')->with('success', 'Data warga **' . $nama_warga . '** berhasil dihapus!');
-    }
-}
+                // 3. REDIRECT & FLASH DATA (Wajib Tugas)
+                return redirect()->route('warga.index')->with('success', 'Data warga **' . $warga->nama . '** berhasil dihapus!');
+            }
+        }

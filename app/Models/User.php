@@ -17,10 +17,15 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+    protected $table = 'users'; // Nama tabel di database
+    protected $primaryKey = 'id'; // Nama Primary Key
+
+     //Kolom yang dapat diisi
     protected $fillable = [
         'name',
         'email',
         'password',
+
     ];
 
     /**
