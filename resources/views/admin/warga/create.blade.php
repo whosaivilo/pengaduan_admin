@@ -1,4 +1,5 @@
 @extends('layouts.app')
+@section('title_page','Tambah Data Warga')
 @section('content')
 
         <!-- Form Start -->

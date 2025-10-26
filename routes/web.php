@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\WargaController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PengaduanController;
+use App\Http\Controllers\KategoriPengaduanController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -31,3 +32,4 @@ Route::resource('warga', WargaController::class);
 // 4. User (Data Master)
 Route::resource('user', UserController::class);
 
+Route::resource('kategori', KategoriPengaduanController::class);

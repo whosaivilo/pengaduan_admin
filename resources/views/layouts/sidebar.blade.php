@@ -42,6 +42,12 @@
                     <i class="fa fa-table me-2"></i>Data User
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="{{ route('kategori.index') }}"
+                    class="nav-item nav-link {{ request()->routeIs('kategori.*') ? 'active' : '' }}">
+                    <i class="fa fa-table me-2"></i>Data Kategori
+                </a>
+            </li>
         </div>
     </nav>
 </div>
