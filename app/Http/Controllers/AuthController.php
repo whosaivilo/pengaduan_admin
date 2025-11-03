@@ -28,6 +28,8 @@ class AuthController extends Controller
             'password.min'      => 'Password minimal 6 karakter',
         ]);
 
+        // dd($request->all());
+
         // if ($request->email == 'theresaoliviaa@gmail.com' && $request->password == 'There123') {
         //     // Simpan data user ke session
         //     $request->session()->put('user', [
@@ -54,7 +56,7 @@ class AuthController extends Controller
 
     public function daftar()
     {
-        return view('pages.admin.register');
+        return view('pages.auth.register');
     }
 
     //Proses halaman register
@@ -62,6 +64,7 @@ class AuthController extends Controller
     {
         //Validasi input
         $validated = $request->validate([
+            'name'   => 'required|string|max:100',
             'email'    => 'required|email|unique:users,email', //Email harus unik
             'password' => 'required|min:6',
         ]);
