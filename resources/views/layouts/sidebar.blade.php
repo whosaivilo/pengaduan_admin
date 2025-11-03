@@ -27,25 +27,25 @@
             <li class="nav-item">
                 <a href="{{ route('pengaduan.index') }}"
                     class="nav-item nav-link {{ request()->routeIs('pengaduan.*') ? 'active' : '' }}">
-                    <i class="fa fa-keyboard me-2"></i>Daftar Pengaduan
+                    <i class="far fa-file-alt me-2"></i>Daftar Pengaduan
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('warga.index') }}"
                     class="nav-item nav-link {{ request()->routeIs('warga.*') ? 'active' : '' }}">
-                    <i class="fa fa-table me-2"></i>Data Warga
+                    <i class="fa fa-user me-2"></i>Data Warga
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('user.index') }}"
                     class="nav-item nav-link {{ request()->routeIs('user.*') ? 'active' : '' }}">
-                    <i class="fa fa-table me-2"></i>Data User
+                    <i class="fa fa-user me-2"></i>Data User
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('kategori.index') }}"
                     class="nav-item nav-link {{ request()->routeIs('kategori.*') ? 'active' : '' }}">
-                    <i class="fa fa-table me-2"></i>Data Kategori
+                    <i class="fa fa-th me-2"></i>Data Kategori
                 </a>
             </li>
         </div>

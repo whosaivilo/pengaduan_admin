@@ -80,7 +80,8 @@
                                     <div class="d-flex">
                                         {{-- Tombol DETAIL (CRUD READ Detail) --}}
                                         <a class="btn btn-sm btn-info me-1"
-                                            href="{{ route('pengaduan.show', $pengaduan->pengaduan_id) }}">Detail</a>
+                                            href="{{ route('pengaduan.show', $pengaduan->pengaduan_id) }}">
+                                        <i class="fa fa-eye"></i></a>
 
 
                                         {{-- Tombol HAPUS (CRUD DELETE) --}}
@@ -89,7 +90,8 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger me-1"
-                                                onclick="return confirm('Yakin hapus pengaduan ini?')">Hapus
+                                                onclick="return confirm('Yakin hapus pengaduan ini?')">
+                                                <i class="fa fa-trash"></i>
                                             </button>
                                         </form>
                                     </div>

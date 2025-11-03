@@ -20,7 +20,7 @@ class PengaduanController extends Controller
         $semua_pengaduan = Pengaduan::with('warga')->latest()->get();
 
         // Mengirim data ke view
-        return view('admin.pengaduan.index', compact('semua_pengaduan'));
+        return view('pages.pengaduan.index', compact('semua_pengaduan'));
     }
 
     /**
@@ -29,7 +29,7 @@ class PengaduanController extends Controller
     public function create()
     {
         $semua_warga = Warga::all();
-        return view('admin.pengaduan.create', compact('semua_warga'));
+        return view('pages.pengaduan.create', compact('semua_warga'));
     }
 
     /**
@@ -41,7 +41,7 @@ class PengaduanController extends Controller
         $pengaduan = Pengaduan::with('warga')->findOrFail($pengaduan_id);
 
         // Tampilkan view detail (misalnya resources/views/admin/pengaduan/show.blade.php)
-        return view('admin.pengaduan.show', compact('pengaduan'));
+        return view('pages.pengaduan.show', compact('pengaduan'));
     }
 
     /**

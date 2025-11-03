@@ -12,7 +12,7 @@ class WargaController extends Controller
     public function index() // [route: warga.index]
     {
         $semua_warga = Warga::latest()->get();
-        return view('admin.warga.index', compact('semua_warga'));
+        return view('pages.warga.index', compact('semua_warga'));
     }
 
     /**
@@ -20,7 +20,7 @@ class WargaController extends Controller
      */
     public function create()
     {
-        return view('admin.warga.create');
+        return view('pages.warga.create');
     }
 
     /**
@@ -55,7 +55,7 @@ class WargaController extends Controller
         $warga = Warga::findOrFail($warga_id);
 
         // Mengirim objek $warga ke view detail
-        return view('admin.warga.show', compact('warga'));
+        return view('pages.warga.show', compact('warga'));
     }
 
     /**
@@ -69,7 +69,7 @@ class WargaController extends Controller
 
         // 2. Tampilkan View Form Edit
         //    View ini sama dengan form create, tapi diisi data lama
-        return view('admin.warga.edit', compact('warga'));
+        return view('pages.warga.edit', compact('warga'));
     }
 
     /**

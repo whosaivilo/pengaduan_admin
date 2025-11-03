@@ -8,18 +8,23 @@
     <meta content="" name="keywords">
     <meta content="" name="description">
 
+    <!-- Font Awesome 6 Free -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-pV1Q8x2iF6jF+z6MfTF7P91GJd4zX+F3ZXxSp1L2Q2m/NxEuzU6Fd5ClV7vYrHzEj7c7dEsm57eX5I5lrzQfQA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
+
+    <!--Bootstrap Icons (boleh tetap dipakai untuk ikon lain) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap"
         rel="stylesheet">
-
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries Stylesheet -->
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -80,8 +85,7 @@
         <!-- Content End -->
 
 
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
     </div>
 
     {{-- js start --}}

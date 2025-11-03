@@ -78,7 +78,7 @@
                                         <td>{{ $pengaduan->created_at->format('d M Y') }}</td>
                                         <td>
                                             <a class="btn btn-sm btn-info"
-                                                href="{{ route('pengaduan.show', $pengaduan->pengaduan_id) }}">Detail</a>
+                                                href="{{ route('pengaduan.show', $pengaduan->pengaduan_id) }}"><i class="fa fa-eye"></i></a>
                                         </td>
                                     </tr>
                                 @empty

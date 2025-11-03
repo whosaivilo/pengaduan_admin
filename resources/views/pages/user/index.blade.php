@@ -34,8 +34,9 @@
                                 <td>
                                     <div class="d-flex">
                                         {{-- Tombol EDIT (CRUD UPDATE) --}}
-                                        <a class="btn btn-sm btn-info me-1"
-                                            href="{{ route('user.edit', $user->id) }}">Edit</a>
+                                        <a class="btn btn-sm btn-warning me-1"
+                                            href="{{ route('user.edit', $user->id) }}">
+                                        <i class="fa fa-edit"></i></a>
 
                                         {{-- Tombol HAPUS (CRUD DELETE) --}}
                                         <form action="{{ route('user.destroy', $user->id) }}" method="POST"
@@ -44,7 +45,7 @@
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger me-1"
                                                 onclick="return confirm('Yakin ingin menghapus data {{ $user->name }}?')">
-                                                Hapus
+                                                <i class="fa fa-trash"></i>
                                             </button>
                                         </form>
                                     </div>

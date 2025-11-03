@@ -9,12 +9,12 @@ class KategoriPengaduanController extends Controller
     public function index()
     {
         $semua_kategori = KategoriPengaduan::all();
-        return view('admin.kategori.index', compact('semua_kategori'));
+        return view('pages.kategori.index', compact('semua_kategori'));
     }
     public function create()
     {
         $semua_kategori = KategoriPengaduan::all();
-        return view('admin.kategori.create',compact('semua_kategori'));
+        return view('pages.kategori.create',compact('semua_kategori'));
     }
     public function store(Request $request)
     {
@@ -31,7 +31,7 @@ class KategoriPengaduanController extends Controller
     public function edit($id)
     {
         $kategori = KategoriPengaduan::findOrFail($id);
-        return view('admin.kategori.edit', compact('kategori'));
+        return view('pages.kategori.edit', compact('kategori'));
     }
 
     public function update(Request $request, $id)

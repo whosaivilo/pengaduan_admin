@@ -11,7 +11,7 @@ class AuthController extends Controller
 {
     public function index()
     {
-        return view('auth.login');
+        return view('pages.auth.login');
     }
 
     //Memproses halaman login
@@ -54,7 +54,7 @@ class AuthController extends Controller
 
     public function daftar()
     {
-        return view('auth.register');
+        return view('pages.admin.register');
     }
 
     //Proses halaman register

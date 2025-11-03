@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title_page','Data Warga')
+@section('title_page', 'Data Warga')
 @section('content')
     <div class="container-fluid pt-4 px-4">
         <div class="bg-secondary text-center rounded p-4">
@@ -42,23 +42,21 @@
                                 <td>
                                     <div class="d-flex">
                                         {{-- Tombol EDIT (CRUD UPDATE) --}}
-                                        <a class="btn btn-sm btn-info me-1"
-                                            href="{{ route('warga.edit', $warga->warga_id) }}">Edit</a>
+                                        <a class="btn btn-sm btn-warning me-1"
+                                            href="{{ route('warga.edit', $warga->warga_id) }}">
+                                            <i class="fa fa-edit"></i></a>
 
                                         {{-- Tombol DETAIL (CRUD READ Detail) --}}
                                         <a class="btn btn-sm btn-info me-1"
-                                            href="{{ route('warga.show', $warga->warga_id) }}">Detail</a>
+                                            href="{{ route('warga.show', $warga->warga_id) }}">
+                                            <i class="fa fa-eye"></i></a>
 
-                                        {{-- Tombol HAPUS (CRUD DELETE) --}}
-                                        <form action="{{ route('warga.destroy', $warga->warga_id) }}" method="POST"
-                                            style="display:inline-block;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-danger me-1"
+                                        {{-- Tombol HAPUS --}}
+                                        <form action="{{ route('warga.destroy', $warga->warga_id) }}"
+                                            method="POST" style="display:inline-block;"> @csrf @method('DELETE') <button
+                                                type="submit" class="btn btn-sm btn-danger me-1"
                                                 onclick="return confirm('Yakin ingin menghapus data {{ $warga->nama }}?')">
-                                                Hapus
-                                            </button>
-                                        </form>
+                                                <i class="fa fa-trash"></i> </button> </form>
                                     </div>
                                 </td>
                             </tr>
