@@ -1,5 +1,6 @@
 {{-- Start CSS --}}
 <!-- Font Awesome 6.5.2 (CDN Resmi) -->
+
 <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     integrity="sha512-pZ8pZKz0+KJ2Wf4ZlV+M8zO4qvQvcp4u8hK2sVY8LtAbKXhyI4ZXHjpmF0y70M2zKfWUJ2s7UXZtQy1C1N8X5A=="

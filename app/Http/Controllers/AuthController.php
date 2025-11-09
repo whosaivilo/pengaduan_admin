@@ -29,28 +29,15 @@ class AuthController extends Controller
         ]);
 
         // dd($request->all());
-
-        // if ($request->email == 'theresaoliviaa@gmail.com' && $request->password == 'There123') {
-        //     // Simpan data user ke session
-        //     $request->session()->put('user', [
-        //         // 'name'  => $request->name,
-        //         'email' => $request->email,
-
-        //     ]);
-
-        //     return redirect()->route('dashboard')->with('success', "Login Berhasil! Selamat datang " . $request->email);
-        // } else {
-        //     return redirect()->back()->with('error', 'Login Gagal! Periksa kembali username dan password Anda.');
-        // }
         //Cek user berdasarkan email
         $users = User::where('email', $request->email)->first();
 
         if ($users && Hash::check($request->password, $users->password)) {
             Auth::login($users);
 
-            return redirect()->route('dashboard')->with('success', "Login Berhasil! Selamat datang " . $users->email);
+            return redirect()->route('dashboard')->with('success', "Login Berhasil! Selamat datang " . $users->name);
         }
-            return redirect()->back()->with('error', 'Login Gagal! Periksa kembali username dan password Anda.'); //Login gagal
+            return redirect()->route('auth')->with('error', 'Login Gagal! Periksa kembali username dan password Anda.'); //Login gagal
     }
 
 
@@ -66,10 +53,18 @@ class AuthController extends Controller
         $validated = $request->validate([
             'name'   => 'required|string|max:100',
             'email'    => 'required|email|unique:users,email', //Email harus unik
-            'password' => 'required|min:6',
+            'password' => 'required|min:6|confirmed',
+        ],[
+            'name.required'     => 'Nama wajib diisi',
+            'email.required'    => 'Email wajib diisi',
+            'email.email'       => 'Format email tidak valid',
+            'email.unique'      => 'Email sudah terdaftar',
+            'password.required' => 'Password wajib diisi',
+            'password.min'      => 'Password minimal 6 karakter',
+            'password.confirmed'=> 'Konfirmasi password tidak sesuai',
         ]);
 
-        // dd($validated);
+        //dd($request->all());
         $users = [
             'name'     => $request->name,
             'email'    => $validated['email'],
@@ -80,7 +75,7 @@ class AuthController extends Controller
         User::create($users);
 
         //Redirect ke halaman login dengan pesan sukses
-        return redirect()->route('login')->with('success', 'Pendaftaran Berhasil! Silakan login ulang!');
+        return redirect()->route('daftar')->with('success', 'Pendaftaran Berhasil! Silakan login ulang!');
     }
 }
 
