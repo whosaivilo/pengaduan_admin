@@ -31,6 +31,37 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a href="{{ route('kategori.index') }}"
+                    class="nav-item nav-link {{ request()->routeIs('kategori.*') ? 'active' : '' }}">
+                    <i class="fa fa-th me-2"></i>Data Kategori
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="{{ route('user.index') }}"
+                    class="nav-item nav-link {{ request()->routeIs('user.*') ? 'active' : '' }}">
+                    <i class="fa fa-user me-2"></i>Kategori Pengaduan
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('user.index') }}"
+                    class="nav-item nav-link {{ request()->routeIs('user.*') ? 'active' : '' }}">
+                    <i class="fa fa-user me-2"></i>Penilai Layanan
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('user.index') }}"
+                    class="nav-item nav-link {{ request()->routeIs('user.*') ? 'active' : '' }}">
+                    <i class="fa fa-user me-2"></i>Tindak Lanjut
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('user.index') }}"
+                    class="nav-item nav-link {{ request()->routeIs('user.*') ? 'active' : '' }}">
+                    <i class="fa fa-user me-2"></i>Media
+                </a>
+            </li>
+            <li class="nav-item">
                 <a href="{{ route('warga.index') }}"
                     class="nav-item nav-link {{ request()->routeIs('warga.*') ? 'active' : '' }}">
                     <i class="fa fa-user me-2"></i>Data Warga
@@ -40,12 +71,6 @@
                 <a href="{{ route('user.index') }}"
                     class="nav-item nav-link {{ request()->routeIs('user.*') ? 'active' : '' }}">
                     <i class="fa fa-user me-2"></i>Data User
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('kategori.index') }}"
-                    class="nav-item nav-link {{ request()->routeIs('kategori.*') ? 'active' : '' }}">
-                    <i class="fa fa-th me-2"></i>Data Kategori
                 </a>
             </li>
         </div>

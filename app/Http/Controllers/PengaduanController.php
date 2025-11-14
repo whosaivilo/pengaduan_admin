@@ -1,18 +1,16 @@
 <?php
 namespace App\Http\Controllers;
 
-use App\Models\Pengaduan;
 use App\Models\Warga;
+use App\Models\Pengaduan;
+use Illuminate\Support\Str;
+use App\Models\TindakLanjut;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage; // Jika Anda sudah menerapkan otentikasi
-use Illuminate\Support\Str;
 
 // Untuk upload file
 class PengaduanController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
 
     public function index() //[route: pengaduan.index]
     {
@@ -23,9 +21,6 @@ class PengaduanController extends Controller
         return view('pages.pengaduan.index', compact('semua_pengaduan'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         $semua_warga = Warga::all();
@@ -55,25 +50,43 @@ class PengaduanController extends Controller
     /**
      * Update the specified resource in storage.
      */
+
     public function update(Request $request, $pengaduan_id)
     {
+        // 1. Cari Pengaduan
         $pengaduan = Pengaduan::findOrFail($pengaduan_id);
 
-        // VALIDASI untuk Tindak Lanjut (termasuk status baru)
+        // 2. VALIDASI DATA STATUS DAN CATATAN
         $request->validate([
-            'catatan_tindak_lanjut' => 'nullable|string',
+            // Validasi ini memastikan status baru valid
             'status'                => 'required|in:Baru,Diproses,Selesai',
+            // Catatan Tindak Lanjut tidak wajib diisi (nullable)
+            'catatan_tindak_lanjut' => 'nullable|string|max:500',
+        ], [
+            'status.required' => 'Status wajib dipilih.',
+            'status.in'       => 'Status tidak valid.',
         ]);
 
-        // Simpan data Tindak Lanjut dan ubah status
-        $pengaduan->status = $request->status;
+        // 3. (OPSIONAL) SIMPAN RIWAYAT TINDAK LANJUT
+        // Disarankan: Buat entri baru di tabel Tindak Lanjut jika ada catatan
+        if ($request->filled('catatan_tindak_lanjut')) {
+            // Catatan: Asumsi Anda akan mengisi kolom 'petugas' dari sesi Auth
+            TindakLanjut::create([
+                'pengaduan_id' => $pengaduan->pengaduan_id,
+                'petugas'      => 'Admin System', // Ganti dengan Auth::user()->name jika sudah diimplementasikan
+                'aksi'         => 'Update Status',
+                'catatan'      => $request->catatan_tindak_lanjut,
+            ]);
+        }
 
-        //simpan perubahan status
+        // 4. UPDATE STATUS UTAMA Pengaduan
+        $pengaduan->status = $request->status;
         $pengaduan->save();
 
-        return redirect()->route('pengaduan.index')->with('success', 'Status dan Tindak Lanjut berhasil diperbarui menjadi **' . $pengaduan->status . '**.');
+        // 5. REDIRECT & FLASH DATA
+        return redirect()->route('pengaduan.show', $pengaduan_id)
+            ->with('success', 'Status pengaduan berhasil diperbarui menjadi **' . $pengaduan->status . '**.');
     }
-    // app/Http/Controllers/PengaduanController.php
 
     public function store(Request $request)
     {

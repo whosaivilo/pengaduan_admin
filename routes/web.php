@@ -1,21 +1,20 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\KategoriPengaduanController;
-use App\Http\Controllers\PengaduanController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\WargaController;
+use App\Models\TindakLanjut;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\WargaController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PengaduanController;
+use App\Http\Controllers\TindakLanjutController;
+use App\Http\Controllers\KategoriPengaduanController;
+use App\Http\Controllers\PenilaiLayananController;
 
 Route::get('/', [AuthController::class, 'index'])->name('auth');       //Halaman login
 Route::post('/auth', [AuthController::class, 'login'])->name('login'); //Memproses halaman login
 
-Route::post('/logout', function () {
-    Auth::logout();
-    return redirect('/'); // arahkan ke halaman utama setelah logout
-})->name('logout');
 
 Route::get('/auth/register', [AuthController::class, 'daftar'])->name('daftar');      //Menampilkan halaman register
 Route::post('/auth/register', [AuthController::class, 'register'])->name('register'); //Memproses halaman register
@@ -33,4 +32,16 @@ Route::resource('warga', WargaController::class);
 // 4. User (Data Master)
 Route::resource('user', UserController::class);
 
+// 5. Kategori Pengaduan
 Route::resource('kategori', KategoriPengaduanController::class);
+
+// 6. Tindak Lanjut
+Route::resource('tindaklanjut', TindakLanjutController::class);
+
+//  7. Penilai Layanan
+Route::resource('penilaian', PenilaiLayananController::class);
+
+//  8. Media
+Route::get('/media', function () {
+    return view('media.index');
+})->name('media');
