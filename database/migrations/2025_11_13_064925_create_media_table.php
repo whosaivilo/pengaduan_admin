@@ -10,7 +10,7 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {    Schema::create('media', function (Blueprint $table) {
+    {Schema::create('media', function (Blueprint $table) {
         $table->id('media_id');
         $table->unsignedBigInteger('pengaduan_id');
         $table->string('path_file');
@@ -18,11 +18,10 @@ return new class extends Migration
         $table->timestamps();
 
         $table->foreign('pengaduan_id')
-              ->references('pengaduan_id')
-              ->on('pengaduan')
-              ->onDelete('cascade');
-        });
-    }
+            ->references('pengaduan_id')
+            ->on('pengaduan')
+            ->onDelete('cascade');
+    });}
 
     /**
      * Reverse the migrations.
