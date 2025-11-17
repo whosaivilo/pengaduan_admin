@@ -15,7 +15,6 @@ class Pengaduan extends Model
         'nomor_tiket',
         'warga_id',
         'kategori_id',
-        'judul',
         'deskripsi',
         'status',
         'lokasi_text',
@@ -30,6 +29,10 @@ class Pengaduan extends Model
         return $this->belongsTo(Warga::class, 'warga_id','warga_id');
     }
 
+      public function media()
+    {
+        return $this->hasMany(Media::class, 'pengaduan_id','pengaduan_id');
+    }
 
 
 }

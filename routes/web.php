@@ -36,7 +36,7 @@ Route::resource('user', UserController::class);
 Route::resource('kategori', KategoriPengaduanController::class);
 
 // 6. Tindak Lanjut
-Route::resource('tindaklanjut', TindakLanjutController::class);
+Route::resource('tindak_lanjut', TindakLanjutController::class);
 
 //  7. Penilai Layanan
 Route::resource('penilaian', PenilaiLayananController::class);

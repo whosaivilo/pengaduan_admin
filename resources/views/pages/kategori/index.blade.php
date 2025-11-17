@@ -16,7 +16,6 @@
                 <table class="table text-start align-middle table-bordered table-hover mb-0">
                     <thead>
                         <tr class="text-white">
-                            <th scope="col">No</th>
                             <th scope="col">ID</th>
                             <th scope="col">Nama</th>
                             <th scope="col">SLA</th>
@@ -28,7 +27,6 @@
                         {{-- Loop data warga yang dikirim dari Controller --}}
                         @forelse ($semua_kategori as $kategori)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
                                 <td>{{ $kategori->kategori_id }}</td>
                                 <td>{{ $kategori->nama }}</td>
                                 <td>{{ $kategori->sla_hari }} hari</td>
@@ -36,8 +34,8 @@
                                 <td>
                                     @php
                                         $badgeClass = match ($kategori->prioritas) {
-                                            'Urgent' => 'bg-danger',
-                                            'Important' => 'bg-warning',
+                                            'Tinggi' => 'bg-danger',
+                                            'Sedang' => 'bg-warning',
                                             default => 'bg-info',
                                         };
                                     @endphp

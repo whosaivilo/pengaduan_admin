@@ -43,15 +43,13 @@
                             <select class="form-select @error('prioritas') is-invalid @enderror" id="prioritas"
                                 name="prioritas">
                                 <option value="">-- Pilih prioritas --</option>
-                                <option value="Urgent" {{ old('prioritas') == 'Urgent' ? 'selected' : '' }}>Urgent
+                                <option value="Tinggi" {{ old('tinggi') == 'Tinggi' ? 'selected' : '' }}>Tinggi
                                 </option>
-                                <option value="Important" {{ old('prioritas') == 'Important' ? 'selected' : '' }}>
-                                    Important</option>
-                                <option value="Not Urgent" {{ old('prioritas') == 'Not Urgent' ? 'selected' : '' }}>
-                                    Not Urgent</option>
-                                <option value="Not Important" {{ old('prioritas') == 'Not Important' ? 'selected' : '' }}>
-                                    Not Important
-                                </option>
+                                <option value="Sedang" {{ old('sedang') == 'Sedang' ? 'selected' : '' }}>
+                                    Sedang</option>
+                                <option value="Rendah" {{ old('rendah') == 'Rendah' ? 'selected' : '' }}>
+                                    Rendah</option>
+
                             </select>
                             @error('prioritas')
                                 <div class="invalid-feedback">{{ $message }}</div>

@@ -16,10 +16,12 @@ return new class extends Migration
                                      // FK ke pengaduan
             $table->foreignId('pengaduan_id')->constrained('pengaduan', 'pengaduan_id')->onDelete('cascade');
 
-            $table->string('petugas', 100); // Admin yang melakukan aksi
+            $table->string('petugas',100);
             $table->text('aksi');
             $table->text('catatan')->nullable();
             $table->timestamps();
+
+
         });
     }
 

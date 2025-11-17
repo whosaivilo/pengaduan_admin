@@ -20,7 +20,6 @@
                             <th scope="col">No. Tiket</th>
                             <th scope="col">Warga ID</th>
                             <th scope="col">Kategori</th>
-                            <th scope="col">Judul</th>
                             <th scope="col">Deskripsi</th>
                             <th scope="col">Status</th>
                             <th scope="col">Diajukan</th>
@@ -40,25 +39,8 @@
                                 <td>{{ $pengaduan->warga_id }}</td>
 
                                 {{-- POSISI 4: KATEGORI (MASUKKAN LOGIC DI SINI) --}}
-                                <td>
-                                    @php
-                                        // Logika terjemahan Kategori
-                                        $kategoriNama = match ((int) $pengaduan->kategori_id) {
-                                            1 => 'Infrastruktur',
-                                            2 => 'Pelayanan Publik',
-                                            3 => 'Keamanan',
-                                            default => 'Lainnya',
-                                        };
-                                        $kategoriBadgeClass = match ((int) $pengaduan->kategori_id) {
-                                            1 => 'bg-info',
-                                            2 => 'bg-primary',
-                                            3 => 'bg-danger',
-                                            default => 'bg-secondary',
-                                        };
-                                    @endphp
-                                    <span class="badge {{ $kategoriBadgeClass }}">{{ $kategoriNama }}</span>
-                                </td>
-                                <td>{{ Str::limit($pengaduan->judul, 50) }}</td> {{-- Memotong judul agar tidak terlalu panjang --}}
+                                <td>{{ $pengaduan->kategori_id}}</td>
+
                                 <td>{{ Str::limit($pengaduan->deskripsi, 50) }}</td> {{-- Memotong judul agar tidak terlalu panjang --}}
 
                                 {{-- Status dengan Badge Warna --}}
@@ -81,7 +63,7 @@
                                         {{-- Tombol DETAIL (CRUD READ Detail) --}}
                                         <a class="btn btn-sm btn-info me-1"
                                             href="{{ route('pengaduan.show', $pengaduan->pengaduan_id) }}">
-                                        <i class="fa fa-eye"></i></a>
+                                            <i class="fa fa-eye"></i></a>
 
 
                                         {{-- Tombol HAPUS (CRUD DELETE) --}}

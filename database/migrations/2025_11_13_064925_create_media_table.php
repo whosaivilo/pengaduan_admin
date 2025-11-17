@@ -10,18 +10,17 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
-        Schema::create('media', function (Blueprint $table) {
-            $table->id('media_id');          // PK
-            $table->string('ref_table', 50); // 'pengaduan' atau 'tindak_lanjut'
-            $table->unsignedBigInteger('ref_id');
-            $table->string('file_url');
-            $table->string('caption')->nullable();
-            $table->string('mime_type', 50);
-            $table->unsignedInteger('sort_order')->default(0);
-            $table->timestamps();
+    {    Schema::create('media', function (Blueprint $table) {
+        $table->id('media_id');
+        $table->unsignedBigInteger('pengaduan_id');
+        $table->string('path_file');
+        $table->string('tipe_file')->nullable();
+        $table->timestamps();
 
-            $table->index(['ref_table', 'ref_id']); // Indeks Polimorfik
+        $table->foreign('pengaduan_id')
+              ->references('pengaduan_id')
+              ->on('pengaduan')
+              ->onDelete('cascade');
         });
     }
 

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title_page','Tambah Pengaduan')
+@section('title_page', 'Tambah Pengaduan')
 @section('content')
     <div class="container-fluid pt-4 px-4">
         <div class="row g-4 justify-content-center">
@@ -33,33 +33,19 @@
                             @enderror
                         </div>
 
-                        {{-- 1. Judul Pengaduan (Kolom: judul) --}}
-                        <div class="mb-3">
-                            <label for="judul" class="form-label">Judul Pengaduan <span
-                                    class="text-danger">*</span></label>
-                            <input type="text" class="form-control @error('judul') is-invalid @enderror" id="judul"
-                                name="judul" value="{{ old('judul') }}">
-                            @error('judul')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
 
                         {{-- 2. Kategori Pengaduan (Kolom: kategori_id) --}}
                         <div class="mb-3">
-                            <label for="kategori_id" class="form-label">Kategori <span class="text-danger">*</span></label>
-                            <select class="form-select @error('kategori_id') is-invalid @enderror" id="kategori_id"
-                                name="kategori_id">
+                            <label for="kategori_id">Kategori Pengaduan</label>
+                            <select name="kategori_id" id="kategori_id" class="form-control" required>
                                 <option value="">-- Pilih Kategori --</option>
-                                <option value="1" {{ old('kategori_id') == 1 ? 'selected' : '' }}>
-                                    Infrastruktur</option>
-                                <option value="2" {{ old('kategori_id') == 2 ? 'selected' : '' }}>
-                                    Pelayanan Publik</option>
-                                <option value="3" {{ old('kategori_id') == 3 ? 'selected' : '' }}>Keamanan
-                                    & Ketertiban</option>
+
+                                @foreach ($semua_kategori as $kategori)
+                                    <option value="{{ $kategori->kategori_id }}">
+                                        {{ $kategori->nama }} ({{ $kategori->prioritas }})
+                                    </option>
+                                @endforeach
                             </select>
-                            @error('kategori_id')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
                         </div>
 
                         {{-- 3. Deskripsi Detail (Kolom: deskripsi) --}}

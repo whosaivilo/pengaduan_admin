@@ -14,15 +14,15 @@ class KategoriPengaduanController extends Controller
     public function create()
     {
         $semua_kategori = KategoriPengaduan::all();
-        return view('pages.kategori.create',compact('semua_kategori'));
+        return view('pages.kategori.create', compact('semua_kategori'));
     }
     public function store(Request $request)
     {
-       $validated = $request->validate([
-    'nama'      => 'required|string|max:100|unique:kategori_pengaduan,nama',
-    'sla_hari'  => 'required|integer|min:1',
-    'prioritas' => 'required|in:Urgent,Important,Not Urgent,Not Important',
-]);
+        $validated = $request->validate([
+            'nama'      => 'required|string|max:100|unique:kategori_pengaduan,nama',
+            'sla_hari'  => 'required|integer|min:1',
+            'prioritas' => 'required|in:Tinggi,Sedang,Rendah',
+        ]);
 
         KategoriPengaduan::create($validated);
 

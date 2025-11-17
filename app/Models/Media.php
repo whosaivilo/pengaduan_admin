@@ -1,19 +1,21 @@
 <?php
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Media extends Model
 {
-    protected $table = 'media';
+    protected $table      = 'media';
     protected $primaryKey = 'media_id';
 
     protected $fillable = [
-        'ref_table', 'ref_id', 'file_url', 'caption', 'mime_type', 'sort_order'
+        'pengaduan_id',
+        'path_file',
+        'tipe_file',
     ];
 
-    // Relasi Polimorfik (Untuk mengetahui Model pemiliknya)
-    public function reference()
+    public function pengaduan()
     {
-        return $this->morphTo();
+        return $this->belongsTo(Pengaduan::class, 'pengaduan_id', 'pengaduan_id');
     }
 }

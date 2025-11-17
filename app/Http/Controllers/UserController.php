@@ -47,7 +47,6 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        // 1. Definisikan ATURAN VALIDASI AWAL (Name dan Email)
         $rules = [
             // Rule unique email: Wajib mengabaikan user dengan ID saat ini ($user->id)
             'name'  => 'required|string|max:100',
@@ -63,7 +62,6 @@ class UserController extends Controller
         // 3. JALANKAN VALIDASI dengan aturan yang sudah diperbarui
         $validated = $request->validate($rules);
 
-        // 4. BLOK IF KEDUA: Memproses data dan HASH password
         if ($request->filled('password')) {
             // HASH password baru sebelum diupdate
             $validated['password'] = Hash::make($request->password);

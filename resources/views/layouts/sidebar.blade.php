@@ -38,27 +38,15 @@
             </li>
 
             <li class="nav-item">
-                <a href="{{ route('user.index') }}"
-                    class="nav-item nav-link {{ request()->routeIs('user.*') ? 'active' : '' }}">
-                    <i class="fa fa-user me-2"></i>Kategori Pengaduan
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('user.index') }}"
-                    class="nav-item nav-link {{ request()->routeIs('user.*') ? 'active' : '' }}">
+                <a href="{{ route('penilaian.index') }}"
+                    class="nav-item nav-link {{ request()->routeIs('penilaian.*') ? 'active' : '' }}">
                     <i class="fa fa-user me-2"></i>Penilai Layanan
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('user.index') }}"
-                    class="nav-item nav-link {{ request()->routeIs('user.*') ? 'active' : '' }}">
+                <a href="{{ route('tindak_lanjut.index') }}"
+                    class="nav-item nav-link {{ request()->routeIs('tindak_lanjut.*') ? 'active' : '' }}">
                     <i class="fa fa-user me-2"></i>Tindak Lanjut
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="{{ route('user.index') }}"
-                    class="nav-item nav-link {{ request()->routeIs('user.*') ? 'active' : '' }}">
-                    <i class="fa fa-user me-2"></i>Media
                 </a>
             </li>
             <li class="nav-item">

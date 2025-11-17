@@ -19,8 +19,6 @@ return new class extends Migration
             $table->foreignId('warga_id')->constrained('warga', 'warga_id')->onDelete('cascade');
             $table->foreignId('kategori_id')->constrained('kategori_pengaduan', 'kategori_id')->onDelete('cascade');
             // Kolom Lain
-
-            $table->string('judul', 255);
             $table->text('deskripsi');
             $table->enum('status', ['Baru', 'Diproses', 'Selesai'])->default('Baru');
             $table->string('lokasi_text', 255);
