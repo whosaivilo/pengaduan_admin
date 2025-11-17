@@ -12,7 +12,7 @@ class TindakLanjutController extends Controller
 {
     public function index()
     {
-        $tindakLanjut = TindakLanjut::with('pengaduan')->get();
+        $tindakLanjut = TindakLanjut::with('pengaduan.media')->get();
         return view('pages.tindak_lanjut.index', compact('tindakLanjut'));
     }
 
