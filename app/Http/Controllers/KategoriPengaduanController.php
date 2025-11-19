@@ -6,9 +6,15 @@ use Illuminate\Http\Request;
 
 class KategoriPengaduanController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $semua_kategori = KategoriPengaduan::all();
+        $filterableColumns = ['prioritas'];
+        $searchableColumns = ['nama', 'sla_hari'];
+        $semua_kategori = KategoriPengaduan::filter($request, $filterableColumns)
+            ->search($request, $searchableColumns)
+            ->paginate(10)
+            ->withQueryString()
+            ->onEachSide(1);
         return view('pages.kategori.index', compact('semua_kategori'));
     }
     public function create()

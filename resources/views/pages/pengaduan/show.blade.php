@@ -46,25 +46,15 @@
                         <textarea class="form-control bg-dark text-white" rows="4" readonly>{{ $pengaduan->deskripsi }}</textarea>
                     </div>
 
-                    @if ($pengaduan->media->isNotEmpty())
-                        @php
-                            $mediaFile = $pengaduan->media->first(); // Ambil lampiran pertama
-                        @endphp
-                        <div class="mb-3">
-                            <label class="form-label text-white">Lampiran Bukti</label><br>
-                            <img src="{{ asset($mediaFile->file_url) }}" alt="Foto Bukti"
-                                style="max-width: 400px; height: auto; border-radius: 8px; border: 1px solid #454545;">
-                            <p class="form-text mt-2 text-white-50">Path: {{ $mediaFile->file_url }}</p>
-                        </div>
+                    @if ($pengaduan->lampiran_bukti)
+                        <img src="{{ asset('storage/lampiran_pengaduan/' . $pengaduan->lampiran_bukti) }}" width="80">
                     @else
                         <div class="mb-3">
                             <p class="text-white-50">Tidak ada lampiran bukti untuk pengaduan ini.</p>
                         </div>
                     @endif
+
                 </div>
-
-
-
             </div>
         </div>
     </div>

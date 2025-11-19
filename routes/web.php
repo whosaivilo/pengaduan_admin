@@ -10,7 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PengaduanController;
 use App\Http\Controllers\TindakLanjutController;
 use App\Http\Controllers\KategoriPengaduanController;
-use App\Http\Controllers\PenilaiLayananController;
+use App\Http\Controllers\PenilaianLayananController;
 
 Route::get('/', [AuthController::class, 'index'])->name('auth');       //Halaman login
 Route::post('/auth', [AuthController::class, 'login'])->name('login'); //Memproses halaman login
@@ -39,7 +39,7 @@ Route::resource('kategori', KategoriPengaduanController::class);
 Route::resource('tindak_lanjut', TindakLanjutController::class);
 
 //  7. Penilai Layanan
-Route::resource('penilaian', PenilaiLayananController::class);
+Route::resource('penilaian', PenilaianLayananController::class);
 
 //  8. Media
 Route::get('/media', function () {

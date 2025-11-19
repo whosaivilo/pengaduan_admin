@@ -18,4 +18,9 @@ class Media extends Model
     {
         return $this->belongsTo(Pengaduan::class, 'pengaduan_id', 'pengaduan_id');
     }
+    public function tindakLanjut()
+    {
+        return $this->belongsTo(TindakLanjut::class, 'tindak_id', 'tindak_id');
+    }
+
 }

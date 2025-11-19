@@ -40,7 +40,7 @@
             <li class="nav-item">
                 <a href="{{ route('penilaian.index') }}"
                     class="nav-item nav-link {{ request()->routeIs('penilaian.*') ? 'active' : '' }}">
-                    <i class="fa fa-user me-2"></i>Penilai Layanan
+                    <i class="fa fa-user me-2"></i>Penilaian Layanan
                 </a>
             </li>
             <li class="nav-item">

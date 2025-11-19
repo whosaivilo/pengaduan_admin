@@ -10,24 +10,38 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {Schema::create('media', function (Blueprint $table) {
+    {Schema::create('media', function (Blueprint $table)
+        {
+
         $table->id('media_id');
-        $table->unsignedBigInteger('pengaduan_id');
+        // Foto milik pengaduan
+        $table->unsignedBigInteger('pengaduan_id')->nullable();
+
+        // Foto milik tindak lanjut
+        $table->unsignedBigInteger('tindak_id')->nullable();
         $table->string('path_file');
         $table->string('tipe_file')->nullable();
         $table->timestamps();
 
+        // FK ke pengaduan
         $table->foreign('pengaduan_id')
             ->references('pengaduan_id')
             ->on('pengaduan')
             ->onDelete('cascade');
-    });}
 
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::dropIfExists('media');
-    }
-};
+        // FK ke tindak_lanjut
+        $table->foreign('tindak_id')
+            ->references('tindak_id')
+            ->on('tindak_lanjut')
+            ->onDelete('cascade');
+        }
+    );}
+
+        /**
+         * Reverse the migrations.
+         */
+        public function down(): void
+        {
+            Schema::dropIfExists('media');
+        }
+    };

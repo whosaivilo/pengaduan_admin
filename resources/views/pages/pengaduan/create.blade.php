@@ -48,6 +48,17 @@
                             </select>
                         </div>
 
+                        {{-- 3. Judul Pengaduan (Kolom: judul) --}}
+                        <div class="mb-3">
+                            <label for="judul" class="form-label">Judul Pengaduan <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" class="form-control @error('judul') is-invalid @enderror" id="judul"
+                                name="judul" value="{{ old('judul') }}" maxlength="150" required>
+                            @error('judul')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
                         {{-- 3. Deskripsi Detail (Kolom: deskripsi) --}}
                         <div class="mb-3">
                             <label for="deskripsi" class="form-label">Deskripsi Detail <span
