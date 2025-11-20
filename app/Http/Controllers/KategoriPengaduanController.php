@@ -12,7 +12,7 @@ class KategoriPengaduanController extends Controller
         $searchableColumns = ['nama', 'sla_hari'];
         $semua_kategori = KategoriPengaduan::filter($request, $filterableColumns)
             ->search($request, $searchableColumns)
-            ->paginate(10)
+            ->paginate(3)
             ->withQueryString()
             ->onEachSide(1);
         return view('pages.kategori.index', compact('semua_kategori'));

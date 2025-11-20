@@ -16,37 +16,48 @@
                 {{-- FILTERABLE --}}
                 <form method="GET" action="{{ route('pengaduan.index') }}" class="mb-3">
                     <div class="row">
-                        <div class="col-md-2">
-                            <select name="status" class="form-select" onchange="this.form.submit()">
-                                <option value="">---Status---</option>
-                                <option value="Selesai" {{ request('status') == 'Selesai' ? 'selected' : '' }}>
-                                    Selesai</option>
-                                <option value="Diproses" {{ request('status') == 'Diproses' ? 'selected' : '' }}>
-                                    Diproses</option>
-                                <option value="Baru" {{ request('status') == 'Baru' ? 'selected' : '' }}>
-                                    Baru</option>
-                            </select>
+                        <div class="col-md-3 me-2">
+                            {{-- Gunakan d-flex untuk menempatkan select dan tombol clear secara horizontal --}}
+                            <div class="d-flex align-items-center">
+                                <select name="status" class="form-select" onchange="this.form.submit()">
+                                    <option value="">---Status---</option>
+                                    <option value="Selesai" {{ request('status') == 'Selesai' ? 'selected' : '' }}>
+                                        Selesai</option>
+                                    <option value="Diproses" {{ request('status') == 'Diproses' ? 'selected' : '' }}>
+                                        Diproses</option>
+                                    <option value="Baru" {{ request('status') == 'Baru' ? 'selected' : '' }}>
+                                        Baru</option>
+                                </select>
+
+                                {{-- Tombol Clear Filter (ikon X). Diberi class input-group-text agar tingginya sama dengan field form lain, dan p-0 untuk mengurangi padding. --}}
+                                @if (request()->has('status') && request('status') != '')
+                                    <a href="{{ request()->fullUrlWithoutQuery(['status']) }}"
+                                        class="btn btn-outline-light input-group-text" style="height: 100%;"
+                                        title="Clear Status Filter">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                @endif
+                            </div>
                         </div>
-                        <div class="col-md-3">
+
+                        {{-- **PERBAIKAN 2: Memperpanjang Field Search** --}}
+
+                        <div class="col-md-4">
                             <div class="input-group">
                                 <input type="text" name="search" class="form-control" id="exampleInputIconRight"
                                     value="{{ request('search') }}" placeholder="Search" aria-label="Search">
-                                <button type="submit" class="input-group-text" id="basic-addon2">
-                                    <svg class="icon icon-xxs" fill="currentColor" viewBox="0 0 20 20"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                            clip-rule="evenodd"></path>
-                                    </svg>
+                                <button type="submit" class="input-group-text **text-danger**" id="basic-addon2">
+                                    <i class="fa fa-search"></i>
                                 </button>
+
+                                {{-- **PERBAIKAN 3: Link Clear Search yang Benar** --}}
                                 @if (request('search'))
-                                    <a href="{{ request()->fullUrlWithQuery(['search' => null]) }}" class="btn btn-primary"
-                                        id="clear-search"> Clear</a>
+                                    <a href="{{ request()->fullUrlWithoutQuery(['search']) }}" class="btn btn-primary"
+                                        id="clear-search">Clear</a>
                                 @endif
                             </div>
                         </div>
                     </div>
-
                 </form>
                 <table class="table text-start align-middle table-bordered table-hover mb-0">
                     <thead>
@@ -65,7 +76,8 @@
                         {{-- Loop data pengaduan --}}
                         @forelse ($semua_pengaduan as $pengaduan)
                             <tr>
-                                <td>{{($semua_pengaduan->currentPage() - 1) * $semua_pengaduan->perPage() + $loop->iteration}}</td>
+                                <td>{{ ($semua_pengaduan->currentPage() - 1) * $semua_pengaduan->perPage() + $loop->iteration }}
+                                </td>
 
                                 {{-- POSISI 2: NO. TIKET ASLI --}}
                                 <td>{{ $pengaduan->nomor_tiket }}</td>

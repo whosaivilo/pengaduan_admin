@@ -46,13 +46,14 @@
                         <textarea class="form-control bg-dark text-white" rows="4" readonly>{{ $pengaduan->deskripsi }}</textarea>
                     </div>
 
-                    @if ($pengaduan->lampiran_bukti)
-                        <img src="{{ asset('storage/lampiran_pengaduan/' . $pengaduan->lampiran_bukti) }}" width="80">
+                    @if ($pengaduan->media->where('tipe_file', 'pengaduan')->count())
+                        @foreach ($pengaduan->media as $media)
+                            <img src="{{ asset('storage/' . $media->path_file) }}" width="200">
+                        @endforeach
                     @else
-                        <div class="mb-3">
-                            <p class="text-white-50">Tidak ada lampiran bukti untuk pengaduan ini.</p>
-                        </div>
+                        <p class="text-white-50">Tidak ada lampiran bukti.</p>
                     @endif
+
 
                 </div>
             </div>

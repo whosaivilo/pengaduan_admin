@@ -14,38 +14,43 @@
                 {{-- FILTERABLE --}}
                 <form method="GET" action="{{ route('tindak_lanjut.index') }}" class="mb-3">
                     <div class="row">
-                        <div class="col-md-2">
-                            <select name="petugas" class="form-select" onchange="this.form.submit()">
-                                <option value="">---Petugas---</option>
-                                <option value="Admin Sistem" {{ request('petugas') == 'Admin Sistem' ? 'selected' : '' }}>
-                                    Admin Sistem</option>
-                                <option value="Petugas Lapangan"
-                                    {{ request('petugas') == 'Petugas Lapangan' ? 'selected' : '' }}>
-                                    Petugas Lapangan</option>
-                                <option value="Petugas Kebersihan"
-                                    {{ request('petugas') == 'Petugas Kebersihan' ? 'selected' : '' }}>
-                                    Petugas Kebersihan</option>
-                                <option value="Satpam Lingkungan"
-                                    {{ request('petugas') == 'Satpam Lingkungan' ? 'selected' : '' }}>
-                                    Satpam Lingkungan</option>
-                                <option value="Operator RW" {{ request('petugas') == 'Operator RW' ? 'selected' : '' }}>
-                                    Operator RW</option>
-                                <option value="Dinas Terkait" {{ request('petugas') == 'Dinas Terkait' ? 'selected' : '' }}>
-                                    Dinas Terkait</option>
-                            </select>
+                        <div class="col-md-3 me-2">
+                            <div class="d-flex align-items-center">
+                                <select name="petugas" class="form-select" onchange="this.form.submit()">
+                                    <option value="">---Petugas---</option>
+                                    <option value="Admin Sistem"
+                                        {{ request('petugas') == 'Admin Sistem' ? 'selected' : '' }}>
+                                        Admin Sistem</option>
+                                    <option value="Petugas Lapangan"
+                                        {{ request('petugas') == 'Petugas Lapangan' ? 'selected' : '' }}>
+                                        Petugas Lapangan</option>
+                                    <option value="Petugas Kebersihan"
+                                        {{ request('petugas') == 'Petugas Kebersihan' ? 'selected' : '' }}>
+                                        Petugas Kebersihan</option>
+                                    <option value="Satpam Lingkungan"
+                                        {{ request('petugas') == 'Satpam Lingkungan' ? 'selected' : '' }}>
+                                        Satpam Lingkungan</option>
+                                    <option value="Operator RW" {{ request('petugas') == 'Operator RW' ? 'selected' : '' }}>
+                                        Operator RW</option>
+                                    <option value="Dinas Terkait"
+                                        {{ request('petugas') == 'Dinas Terkait' ? 'selected' : '' }}>
+                                        Dinas Terkait</option>
+                                </select>
+                                @if (request()->has('petugas') && request('petugas') != '')
+                                    <a href="{{ request()->fullUrlWithoutQuery(['petugas']) }}"
+                                        class="btn btn-outline-light input-group-text" style="height: 100%;"
+                                        title="Clear Petugas Filter">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                @endif
+                            </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <div class="input-group">
                                 <input type="text" name="search" class="form-control" id="exampleInputIconRight"
                                     value="{{ request('search') }}" placeholder="Search" aria-label="Search">
                                 <button type="submit" class="input-group-text" id="basic-addon2">
-                                    <svg class="icon icon-xxs" fill="currentColor" viewBox="0 0 20 20"
-                                        xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd"
-                                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                                            clip-rule="evenodd"></path>
-                                    </svg>
-
+                                    <i class="fa fa-search"></i>
                                 </button>
                                 @if (request('search'))
                                     <a href="{{ request()->fullUrlWithQuery(['search' => null]) }}" class="btn btn-danger"

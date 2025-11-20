@@ -1,5 +1,4 @@
 <?php
-
 namespace Database\Seeders;
 
 use App\Models\TindakLanjut;
@@ -12,7 +11,7 @@ class TindakLanjutMediaSeeder extends Seeder
     public function run(): void
     {
         // Ambil file dari folder public/dummy
-        $dummyPath = public_path('dummy');
+        $dummyPath   = public_path('dummy');
         $dummyImages = File::files($dummyPath);
 
         if (empty($dummyImages)) {
@@ -26,12 +25,12 @@ class TindakLanjutMediaSeeder extends Seeder
 
             if (rand(1, 100) <= 50) { // 50% ada bukti foto tindak lanjut
                 $randomFile = $dummyImages[array_rand($dummyImages)];
-                $extension = $randomFile->getExtension();
-                $newName = 'tindak/' . uniqid('tl_') . '.' . $extension;
+                $extension  = $randomFile->getExtension();
+                $newName    = 'tindak/' . uniqid('tl_') . '.' . $extension;
 
                 // Copy file ke storage/app/public/tindak/
-                Storage::put(
-                    'public/' . $newName,
+                Storage::disk('public')->put(
+                    $newName,
                     File::get($randomFile->getRealPath())
                 );
 

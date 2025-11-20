@@ -21,25 +21,33 @@ class PengaduanMediaSeeder extends Seeder
 
         $pengaduans = Pengaduan::all();
 
-       foreach ($pengaduans as $p) {
+        foreach ($pengaduans as $p) {
 
-    if (rand(1, 100) <= 60) {
-        $randomFile = $dummyImages[array_rand($dummyImages)];
-        $extension  = $randomFile->getExtension();
-        $newName    = 'lampiran_pengaduan/' . uniqid('lamp_') . '.' . $extension;
+            if (rand(1, 100) <= 60) {
 
-        Storage::put('public/' . $newName, File::get($randomFile->getRealPath()));
+                $randomFile = $dummyImages[array_rand($dummyImages)];
+                $extension  = $randomFile->getExtension();
+                $filename   = uniqid('lamp_') . '.' . $extension;
 
-        // Simpan ke kolom lampiran_bukti (agar view bisa langsung pakai)
-        $p->update(['lampiran_bukti' => $newName]);
+                // simpan ke storage/app/public/lampiran_pengaduan
+                Storage::disk('public')->put(
+                    'lampiran_pengaduan/' . $filename,
+                    File::get($randomFile->getRealPath())
+                );
 
-        // Optional: Simpan juga ke tabel media
-        $p->media()->create([
-            'path_file' => $newName,
-            'tipe_file' => 'pengaduan',
-        ]);
-    }
-}
+                // simpan ke TABEL MEDIA
+                $p->media()->create([
+                    'path_file' => 'lampiran_pengaduan/' . $filename,
+                    'tipe_file' => 'pengaduan',
+                ]);
+
+                // UPDATE KOLOM TABEL PENGADUAN
+                $p->update([
+                    'lampiran_bukti' => $filename,
+                ]);
+            }
+        }
+
         $this->command->info("Media bukti pengaduan berhasil ditambahkan ke tabel media dan kolom lampiran_bukti.");
     }
 }
