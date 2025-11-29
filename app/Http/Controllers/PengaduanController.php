@@ -9,9 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
-// Jika Anda sudah menerapkan otentikasi
-
-// Untuk upload file
 class PengaduanController extends Controller
 {
 
@@ -41,6 +38,7 @@ class PengaduanController extends Controller
 
     public function show($pengaduan_id)
     {
+        // Pastikan relasi media di-load
         $pengaduan = Pengaduan::with(['warga', 'kategori', 'media'])->findOrFail($pengaduan_id);
         return view('pages.pengaduan.show', compact('pengaduan'));
     }
@@ -48,63 +46,78 @@ class PengaduanController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'warga_id'       => 'required|integer|exists:warga,warga_id',
-            'kategori_id'    => 'required|integer|exists:kategori_pengaduan,kategori_id',
-            'judul'          => 'required|string|max 15',
-            'deskripsi'      => 'required|string',
-            'lokasi_text'    => 'required|string|max:255',
-            'rt'             => 'required|digits_between:1,3',
-            'rw'             => 'required|digits_between:1,3',
-            'lampiran_bukti' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'warga_id'         => 'required|integer|exists:warga,warga_id',
+            'kategori_id'      => 'required|integer|exists:kategori_pengaduan,kategori_id',
+            'judul'            => 'required|string|max:255', // Maksimal diubah ke 255
+            'deskripsi'        => 'required|string',
+            'lokasi_text'      => 'required|string|max:255',
+            'rt'               => 'required|digits_between:1,3',
+            'rw'               => 'required|digits_between:1,3',
+                                                                       // PERBAIKAN PENTING: Validasi multiple file upload (gunakan array [] di input form)
+            'lampiran_bukti'   => 'nullable',                          // Boleh null jika user tidak upload
+            'lampiran_bukti.*' => 'image|mimes:jpeg,png,jpg|max:2048', // Validasi setiap file dalam array
         ]);
 
-        // 2. GENERATE NOMOR TIKET UNIK (Koreksi Panjang)
+        // 1. GENERATE NOMOR TIKET UNIK
         $nomorTiket = 'PND' . now()->format('dHi') . Str::random(2);
 
-        // 2. Upload file bukti jika ada
-        $fileNameToStore = null;
-        if ($request->hasFile('lampiran_bukti')) {
-            $file = $request->file('lampiran_bukti');
-            // Path penyimpanan: storage/app/public/lampiran_pengaduan
-            $path = $file->store('lampiran', 'public');
-            // Kita hanya ambil nama file saja untuk disimpan di kolom lampiran_bukti
-            $fileNameToStore = basename($path);
-        }
-
-        // 5. SIMPAN DATA KE DATABASE
+        // 2. SIMPAN DATA PENGADUAN UTAMA
         $pengaduan = Pengaduan::create([
-            'nomor_tiket'    => $nomorTiket,
-            'warga_id'       => $validatedData['warga_id'],
-            'kategori_id'    => $validatedData['kategori_id'],
-            'judul'          => $validatedData['judul'],
-            'deskripsi'      => $validatedData['deskripsi'],
-            'lokasi_text'    => $validatedData['lokasi_text'],
-            'rt'             => $validatedData['rt'],
-            'rw'             => $validatedData['rw'],
-            'lampiran_bukti' => $fileNameToStore,
-            'status'         => 'Baru',
+            'nomor_tiket' => $nomorTiket,
+            'warga_id'    => $validatedData['warga_id'],
+            'kategori_id' => $validatedData['kategori_id'],
+            'judul'       => $validatedData['judul'],
+            'deskripsi'   => $validatedData['deskripsi'],
+            'lokasi_text' => $validatedData['lokasi_text'],
+            'rt'          => $validatedData['rt'],
+            'rw'          => $validatedData['rw'],
+            // HAPUS kolom 'lampiran_bukti' dari sini, karena sudah di-handle oleh tabel media
+            'status'      => 'Diproses',
         ]);
 
-        // 6. REDIRECT & FLASH DATA
+        // 3. LOGIKA MULTIPLE FILE UPLOAD KE TABEL MEDIA
+        if ($request->hasFile('lampiran_bukti')) {
+            $sortOrder = 1;
+
+            foreach ($request->file('lampiran_bukti') as $file) {
+                // Simpan file ke storage/app/public/pengaduan/
+                // Folder penyimpanan bisa Anda tentukan: 'pengaduan'
+
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $path     = $file->storeAs('pengaduan', $fileName, 'public');
+
+                // Simpan metadata ke tabel media menggunakan relasi morphMany (polimorfik)
+                $pengaduan->media()->create([
+                    'ref_table'  => 'pengaduan',
+                    'ref_id'     => $pengaduan->pengaduan_id,
+                    'file_name'  => $fileName,
+                    'mime_type'  => $file->getClientMimeType(),
+                    'sort_order' => $sortOrder++,
+                    'caption'    => null, // Bisa diisi dari form jika ada
+                ]);
+            }
+        }
+
+        // 4. REDIRECT & FLASH DATA
         return redirect()->route('pengaduan.index')->with('success', 'Pengaduan dengan nomor tiket ' . $nomorTiket . ' berhasil diajukan!');
     }
 
     public function destroy($pengaduan_id)
     {
-        $pengaduan = Pengaduan::with('media')->findOrFail($pengaduan_id);
+        $pengaduan = Pengaduan::findOrFail($pengaduan_id);
 
-        // 2. HAPUS FILE TERTANAM
-        foreach ($pengaduan->media as $media) {
-            Storage::delete(str_replace('storage/', 'public/', $media->path_file));
-            $media->delete();
-        }
+        // 1. HAPUS SEMUA FILE FISIK DAN RECORD DARI TABEL MEDIA (Polimorfik)
+        $pengaduan->media->each(function (Media $media) {
+            // Hapus file fisik dari disk
+            Storage::disk('public')->delete('pengaduan/' . $media->file_name);
+            $media->delete(); // Hapus record dari tabel media
+        });
 
-        // 3. HAPUS DATA DARI DATABASE
+        // 2. HAPUS DATA PENGADUAN UTAMA
         $pengaduan->delete();
 
-        // 4. REDIRECT & FLASH DATA
+        // 3. REDIRECT & FLASH DATA
         return redirect()->route('pengaduan.index')
-            ->with('success', 'Pengaduan dengan nomor tiket **' . $pengaduan_id . ' berhasil dihapus, dan lampiran bukti telah dihapus!');
+            ->with('success', 'Pengaduan berhasil dihapus, dan lampiran bukti telah dihapus!');
     }
-
 }

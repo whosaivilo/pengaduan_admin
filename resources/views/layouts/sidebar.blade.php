@@ -40,13 +40,13 @@
             <li class="nav-item">
                 <a href="{{ route('penilaian.index') }}"
                     class="nav-item nav-link {{ request()->routeIs('penilaian.*') ? 'active' : '' }}">
-                    <i class="fa fa-user me-2"></i>Penilaian Layanan
+                    <i class="fa fa-star me-2"></i>Penilaian Layanan
                 </a>
             </li>
             <li class="nav-item">
                 <a href="{{ route('tindak_lanjut.index') }}"
                     class="nav-item nav-link {{ request()->routeIs('tindak_lanjut.*') ? 'active' : '' }}">
-                    <i class="fa fa-user me-2"></i>Tindak Lanjut
+                    <i class="fa fa-cubes me-2"></i>Tindak Lanjut
                 </a>
             </li>
             <li class="nav-item">

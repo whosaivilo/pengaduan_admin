@@ -70,7 +70,6 @@
                             <th>Petugas</th>
                             <th>Aksi</th>
                             <th>Catatan</th>
-                            <th>Lampiran</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -84,18 +83,15 @@
                                 <td>{{ $tl->aksi }}</td>
                                 <td>{{ Str::limit($tl->catatan, 50) }}</td>
 
-                                {{-- LAMPIRAN MEDIA --}}
-                                <td>
-                                    @if ($tl->lampiran_bukti)
-                                        <img src="{{ asset('storage/tindak/' . $tl->lampiran_bukti) }}" width="80">
-                                    @else
-                                        <span class="text-white-50">Tidak ada</span>
-                                    @endif
-                                </td>
-
                                 {{--  --}}
                                 <td>
                                     <div class="d-flex">
+                                        {{-- Tombol SHOW --}}
+                                        <a href="{{ route('tindak_lanjut.show', $tl->tindak_id) }}"
+                                            class="btn btn-sm btn-info me-1">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+
                                         {{-- Tombol EDIT --}}
                                         <a href="{{ route('tindak_lanjut.edit', $tl->tindak_id) }}"
                                             class="btn btn-sm btn-warning me-1">

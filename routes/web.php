@@ -41,7 +41,6 @@ Route::resource('tindak_lanjut', TindakLanjutController::class);
 //  7. Penilai Layanan
 Route::resource('penilaian', PenilaianLayananController::class);
 
-//  8. Media
-Route::get('/media', function () {
-    return view('media.index');
-})->name('media');
+Route::delete('/media/{id}', [TindakLanjutController::class, 'deleteMedia'])
+    ->name('media.delete');
+

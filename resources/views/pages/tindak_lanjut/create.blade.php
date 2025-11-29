@@ -37,7 +37,6 @@
                                         {{ $p->nomor_tiket }} - {{ Str::limit($p->judul, 40) }}
                                     </option>
                                 @endforeach
-
                             </select>
                             @error('pengaduan_id')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -61,8 +60,7 @@
                             <label for="aksi" class="form-label text-white">Aksi Petugas <span
                                     class="text-danger">*</span></label>
                             <input type="text" class="form-control @error('aksi') is-invalid @enderror" id="aksi"
-                                name="aksi" value="{{ old('aksi') }}"
-                                placeholder="" required>
+                                name="aksi" value="{{ old('aksi') }}" placeholder="" required>
                             @error('aksi')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -77,16 +75,20 @@
                             @enderror
                         </div>
 
-                        {{-- 5. Lampiran Bukti (File Input) --}}
-                        <div class="mb-3 mt-3">
-                            <label for="lampiran_bukti" class="form-label text-white">Lampiran Bukti</label>
+                        {{-- LAMPIRAN FILE --}}
+                        <div class="mb-3">
+                            <label for="lampiran_bukti" class="form-label text-white">
+                                Lampiran Bukti Tindak Lanjut <span class="text-danger">*</span>
+
+                            </label>
+
                             <input type="file" class="form-control bg-dark @error('lampiran_bukti') is-invalid @enderror"
-                                id="lampiran_bukti" name="lampiran_bukti" accept="image/*" required>
+                                id="lampiran_bukti" name="lampiran_bukti[]" multiple accept="image/*" required>
+
                             @error('lampiran_bukti')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-
 
                         <div class="d-flex justify-content-between mt-3">
                             <a href="{{ route('tindak_lanjut.index') }}" class="btn btn-secondary">Batal</a>

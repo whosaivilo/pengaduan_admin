@@ -9,18 +9,12 @@ class Media extends Model
     protected $primaryKey = 'media_id';
 
     protected $fillable = [
-        'pengaduan_id',
-        'path_file',
-        'tipe_file',
+        'ref_table',
+        'ref_id',
+        'file_name', // Diubah dari path_file
+        'caption',
+        'mime_type',
+        'sort_order',
     ];
-
-    public function pengaduan()
-    {
-        return $this->belongsTo(Pengaduan::class, 'pengaduan_id', 'pengaduan_id');
-    }
-    public function tindakLanjut()
-    {
-        return $this->belongsTo(TindakLanjut::class, 'tindak_id', 'tindak_id');
-    }
 
 }

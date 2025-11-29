@@ -104,10 +104,10 @@
 
                         {{-- 5. Lampiran Bukti (File Input) --}}
                         <div class="mb-3 mt-3">
-                            <label for="lampiran_bukti" class="form-label">Unggah Bukti (Foto/Media)</label>
-                            <input class="form-control bg-dark @error('lampiran_bukti') is-invalid @enderror" type="file"
-                                id="lampiran_bukti" name="lampiran_bukti">
-                            @error('lampiran_bukti')
+                            <label for="lampiran_bukti" class="form-label">Unggah Bukti (Foto/Media) - Multiple File</label>
+                            <input class="form-control bg-dark @error('lampiran_bukti.*') is-invalid @enderror" type="file"
+                                id="lampiran_bukti" name="lampiran_bukti[]" multiple>
+                            @error('lampiran_bukti.*')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>

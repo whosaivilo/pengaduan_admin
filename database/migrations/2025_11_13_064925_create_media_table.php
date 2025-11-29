@@ -10,38 +10,35 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {Schema::create('media', function (Blueprint $table)
+    {
+        Schema::create('media', function (Blueprint $table)
         {
+            $table->id('media_id');
 
-        $table->id('media_id');
-        // Foto milik pengaduan
-        $table->unsignedBigInteger('pengaduan_id')->nullable();
+            // 'ref_table' akan menyimpan nama model/tabel (e.g., 'Pengaduan', 'Berita')
+            // 'ref_id' akan menyimpan ID dari record di tabel tersebut
+            $table->string('ref_table', 50)->comment('Nama tabel yang direferensi');
+            $table->unsignedBigInteger('ref_id')->comment('ID dari record yang direferensi');
+            $table->index(['ref_table', 'ref_id']);
 
-        // Foto milik tindak lanjut
-        $table->unsignedBigInteger('tindak_id')->nullable();
-        $table->string('path_file');
-        $table->string('tipe_file')->nullable();
-        $table->timestamps();
 
-        // FK ke pengaduan
-        $table->foreign('pengaduan_id')
-            ->references('pengaduan_id')
-            ->on('pengaduan')
-            ->onDelete('cascade');
+            // --- KOLOM FILE ---
+            $table->string('file_name', 255)->comment('Nama file di storage'); // Menggantikan path_file
+            $table->string('caption', 255)->nullable(); // Kolom caption
+            $table->string('mime_type', 100)->nullable();
+            $table->unsignedSmallInteger('sort_order')->nullable(); // Kolom sort_order
 
-        // FK ke tindak_lanjut
-        $table->foreign('tindak_id')
-            ->references('tindak_id')
-            ->on('tindak_lanjut')
-            ->onDelete('cascade');
-        }
-    );}
 
-        /**
-         * Reverse the migrations.
-         */
-        public function down(): void
-        {
-            Schema::dropIfExists('media');
-        }
-    };
+            $table->timestamps();
+
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('media');
+    }
+};

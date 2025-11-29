@@ -17,7 +17,9 @@ class TindakLanjut extends Model
     }
     public function media()
     {
-        return $this->hasMany(Media::class, 'tindak_id', 'tindak_id');
+        return $this->hasMany(Media::class, 'ref_id', 'tindak_id')
+        ->where('ref_table', 'tindak_lanjut')
+        ->orderBy('sort_order');
     }
 
     public function scopeFilter(Builder $query, $request, array $filterableColumns): Builder

@@ -25,8 +25,6 @@
                                         Selesai</option>
                                     <option value="Diproses" {{ request('status') == 'Diproses' ? 'selected' : '' }}>
                                         Diproses</option>
-                                    <option value="Baru" {{ request('status') == 'Baru' ? 'selected' : '' }}>
-                                        Baru</option>
                                 </select>
 
                                 {{-- Tombol Clear Filter (ikon X). Diberi class input-group-text agar tingginya sama dengan field form lain, dan p-0 untuk mengurangi padding. --}}
@@ -97,7 +95,6 @@
                                 <td>
                                     @php
                                         $badgeClass = match ($pengaduan->status) {
-                                            'Baru' => 'bg-danger',
                                             'Diproses' => 'bg-warning',
                                             'Selesai' => 'bg-success',
                                             default => 'bg-secondary',

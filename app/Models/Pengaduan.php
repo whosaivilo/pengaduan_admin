@@ -21,7 +21,6 @@ class Pengaduan extends Model
         'lokasi_text',
         'rt',
         'rw',
-        'lampiran_bukti',
     ];
 
     // Relasi wajib (Dipanggil di DashboardController)
@@ -36,12 +35,15 @@ class Pengaduan extends Model
     }
     public function kategori()
     {
-
         return $this->belongsTo(KategoriPengaduan::class, 'kategori_id', 'kategori_id');
     }
     public function media()
     {
-        return $this->hasMany(Media::class, 'pengaduan_id', 'pengaduan_id');
+        return $this->hasMany(
+            Media::class, 'ref_id', 'pengaduan_id')
+            ->where('ref_table', 'pengaduan')
+            ->orderBy('sort_order');
+
     }
 
     public function scopeFilter(Builder $query, $request, array $filterableColumns): Builder
