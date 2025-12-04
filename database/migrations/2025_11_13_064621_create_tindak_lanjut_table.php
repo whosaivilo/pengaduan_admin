@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('petugas', 100);
             $table->text('aksi');
             $table->text('catatan')->nullable();
-            $table->string('lampiran_bukti')->nullable();
             $table->timestamps();
 
         });

@@ -26,8 +26,7 @@ return new class extends Migration
             $table->string('rt', 3);
             $table->string('rw', 3);
 
-            // Tambahkan kolom untuk Lampiran Bukti
-            $table->string('lampiran_bukti')->nullable();
+
 
             $table->timestamps();
         });

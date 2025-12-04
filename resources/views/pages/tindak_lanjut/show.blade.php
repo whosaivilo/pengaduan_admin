@@ -31,8 +31,8 @@
                                 <td>
                                     {{-- Tombol lihat --}}
                                     <a href="#" class="btn btn-info btn-sm view-image"
-                                        data-image="{{ asset('storage/tindak/' . $m->file_name) }}">
-                                        Lihat
+                                        onclick="showImageModal('{{ asset('storage/tindak/' . $m->file_name) }}')">
+                                        <i class="fa fa-eye"></i>
                                     </a>
 
                                     {{-- Tombol hapus --}}
@@ -42,7 +42,7 @@
                                         @method('DELETE')
                                         <button onclick="return confirm('Hapus lampiran ini?')"
                                             class="btn btn-danger btn-sm">
-                                            Hapus
+                                            <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
                                 </td>
@@ -61,34 +61,26 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="imageModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content bg-dark">
-                <div class="modal-body text-center">
-                    <img id="previewImage" src="" class="img-fluid rounded">
+     <!-- Modal Preview -->
+    <div class="modal fade" id="previewModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content bg-dark text-white">
+                <div class="modal-header">
+                    <h5 class="modal-title">Preview Lampiran</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                        Tutup
-                    </button>
+                <div class="modal-body text-center">
+                    <img id="previewImage" src="" class="img-fluid rounded border">
                 </div>
             </div>
         </div>
     </div>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const modal = new bootstrap.Modal(document.getElementById('imageModal'));
-            const previewImage = document.getElementById('previewImage');
-
-            document.querySelectorAll('.view-image').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const imgSrc = this.getAttribute('data-image');
-                    previewImage.src = imgSrc;
-                    modal.show();
-                });
-            });
-        });
+        function showImageModal(src) {
+            document.getElementById('previewImage').src = src;
+            let modal = new bootstrap.Modal(document.getElementById('previewModal'));
+            modal.show();
+        }
     </script>
 
 

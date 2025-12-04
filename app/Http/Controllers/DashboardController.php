@@ -3,11 +3,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Pengaduan;
 use App\Models\PenilaianLayanan;
-
+use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
     public function index()
     {
+        if (!Auth::check()) {
+            return redirect()->route('auth')->with('error','Silakan Login dulu');
+        }
         // 1. Ambil Data Statistik (untuk Card)
         $total_masuk       = Pengaduan::count();
         $belum_diproses    = Pengaduan::where('status', 'Baru')->count();
