@@ -13,7 +13,7 @@ class DashboardController extends Controller
         }
         // 1. Ambil Data Statistik (untuk Card)
         $total_masuk       = Pengaduan::count();
-        $belum_diproses    = Pengaduan::where('status', 'Baru')->count();
+        $belum_diproses    = Pengaduan::where('status', 'Diproses')->count();
         $selesai_ditangani = Pengaduan::where('status', 'Selesai')->count();
 
         $rata_rata_rating = PenilaianLayanan::avg('rating'); // Menghitung rata-rata rating

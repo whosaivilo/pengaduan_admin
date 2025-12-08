@@ -84,7 +84,7 @@
                                 <td>{{ $pengaduan->warga_id }}</td>
 
                                 {{-- POSISI 4: KATEGORI (MASUKKAN LOGIC DI SINI) --}}
-                                <td>{{ $pengaduan->kategori_id }}</td>
+                                <td>{{ $pengaduan->kategori->nama }}</td>
 
                                 {{-- POSISI 4: JUDUL (MASUKKAN LOGIC DI SINI) --}}
                                 <td>{{ $pengaduan->judul }}</td>
@@ -110,6 +110,11 @@
                                             href="{{ route('pengaduan.show', $pengaduan->pengaduan_id) }}">
                                             <i class="fa fa-eye"></i></a>
 
+                                        {{-- Tombol EDIT GAMBAR --}}
+                                        <a class="btn btn-sm btn-warning me-1"
+                                            href="{{ route('pengaduan.edit', $pengaduan->pengaduan_id) }}">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
 
                                         {{-- Tombol HAPUS (CRUD DELETE) --}}
                                         <form action="{{ route('pengaduan.destroy', $pengaduan->pengaduan_id) }}"

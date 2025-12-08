@@ -1,8 +1,8 @@
 @if (Auth::check())
     <div class="sidebar pe-4 pb-3">
         <nav class="navbar bg-secondary navbar-dark">
-            <a href="index.html" class="navbar-brand mx-4 mb-3">
-                <img src="{{ asset('assets/logo.png') }}" alt="Logo Bina Desa" style="width:190px; margin-bottom:1  0px;">
+            <a href="{{ route('dashboard')}}" class="navbar-brand mx-4 mb-3">
+                <img src="{{ asset('assets/img/logo.png') }}" alt="Logo Bina Desa" style="width:190px; margin-bottom:1  0px;">
 
             </a>
             <div class="d-flex align-items-center ms-4 mb-4">

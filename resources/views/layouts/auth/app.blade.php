@@ -15,18 +15,7 @@
 
 <body>
     <div class="container-fluid position-relative d-flex p-0">
-        @if (session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ session('success') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-        @if (session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
+
         <div class="container-fluid">
             <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
 
@@ -36,7 +25,7 @@
                     <div class="bg-overlay"></div>
 
                     <div class="content-wrapper d-flex flex-column align-items-center justify-content-center">
-                        <img src="{{ asset('assets/logo.png') }}" alt="Logo Bina Desa"
+                        <img src="{{ asset('assets/img/logo.png') }}" alt="Logo Bina Desa"
                             style="width:300px; margin-bottom:20px;">
 
                         <h2>Bina Desa</h2>
@@ -49,4 +38,5 @@
 
 
                 @yield('content')
+
 </body>

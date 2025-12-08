@@ -11,7 +11,7 @@ class PengaduanMediaSeeder extends Seeder
     public function run(): void
     {
         // Ambil file dari folder public/dummy
-        $dummyPath   = public_path('dummy');
+        $dummyPath   = public_path('pengaduan_dummy');
         $dummyImages = File::files($dummyPath);
 
         if (empty($dummyImages)) {

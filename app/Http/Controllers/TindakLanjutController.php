@@ -61,13 +61,14 @@ class TindakLanjutController extends Controller
                 $path     = $file->storeAs('tindak', $filename, 'public');
 
                 // Simpan metadata media
-                $tindak->media()->create([
-                    'ref_table'  => 'tindak_lanjut',    // TAMBAHKAN INI
-                    'ref_id'     => $tindak->tindak_id, // Walaupun sudah otomatis dari relasi, ini untuk kejelasan
+                // Simpan metadata ke tabel media
+                Media::create([
+                    'ref_table'  => 'tindak_lanjut',    // wajib manual
+                    'ref_id'     => $tindak->tindak_id, // wajib manual
                     'file_name'  => $filename,
                     'mime_type'  => $file->getClientMimeType(),
                     'sort_order' => $sort++,
-                    'caption'    => null, // Bisa diisi dari form jika ada
+                    'caption'    => null,
                 ]);
             }
         }
@@ -156,15 +157,15 @@ class TindakLanjutController extends Controller
             ->with('success', 'Tindak Lanjut berhasil dihapus.');
     }
     public function deleteMedia($id)
-{
-    $media = Media::findOrFail($id);
+    {
+        $media = Media::findOrFail($id);
 
-    // Hapus file fisik
-    Storage::disk('public')->delete('tindak/' . $media->file_name);
+        // Hapus file fisik
+        Storage::disk('public')->delete('tindak/' . $media->file_name);
 
-    // Hapus record
-    $media->delete();
+        // Hapus record
+        $media->delete();
 
-    return back()->with('success', 'Lampiran berhasil dihapus.');
-}
+        return back()->with('success', 'Lampiran berhasil dihapus.');
+    }
 }

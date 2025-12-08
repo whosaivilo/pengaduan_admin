@@ -52,15 +52,14 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
+            {{-- Main Content Wrapper --}}
+            <div class="container-fluid pt-3 pb-4">
+                @yield('content')
+            </div>
 
-            {{-- main content start --}}
-            <!-- Sale & Revenue Start -->
-            @yield('content')
-
-
-            <!-- Footer Start -->
-            @include('layouts.footer')
-            <!-- Footer End -->
+            <div class="container-fluid px-4">
+                @include('layouts.footer')
+            </div>
         </div>
         <!-- Content End -->
     </div>

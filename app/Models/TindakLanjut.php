@@ -9,7 +9,7 @@ class TindakLanjut extends Model
     protected $table      = 'tindak_lanjut';
     protected $primaryKey = 'tindak_id';
 
-    protected $fillable = ['pengaduan_id', 'petugas', 'aksi', 'catatan', 'lampiran_bukti'];
+    protected $fillable = ['pengaduan_id', 'petugas', 'aksi', 'catatan'];
 
     public function pengaduan()
     {

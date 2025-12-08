@@ -126,11 +126,10 @@ class CreatePengaduanDummy extends Seeder
                 'judul'          => $faker->randomElement($template[$namaKategori]['judul']),
                 'deskripsi'      => $faker->randomElement($template[$namaKategori]['deskripsi']),
 
-                'status'         => $faker->randomElement(['Baru', 'Diproses', 'Selesai']),
+                'status'         => $faker->randomElement(['Diproses', 'Selesai']),
                 'lokasi_text'    => $faker->address,
                 'rt'             => $faker->numberBetween(1, 10),
                 'rw'             => $faker->numberBetween(1, 10),
-                'lampiran_bukti' => null,
                 'created_at'     => now(),
                 'updated_at'     => now(),
             ]);

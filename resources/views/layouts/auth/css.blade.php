@@ -44,7 +44,7 @@
 
         /* Gambar latar mencakup seluruh halaman */
         body {
-            background-image: url('{{ asset('img/ilustrasi-pengaduan.jpg') }}');
+            background-image: url("/assets/img/ilustrasi-pengaduan.jpg");
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;

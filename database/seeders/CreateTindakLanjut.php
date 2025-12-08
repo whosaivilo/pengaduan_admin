@@ -84,14 +84,14 @@ class CreateTindakLanjut extends Seeder
             $aksi = $aksiData['aksi'];
 
             $catatan = rand(0, 1) === 1 ? $faker->randomElement($aksiData['catatan']) : null;
-            $lampiran = rand(0, 1) === 1 ? 'lampiran/tindak_' . Str::random(8) . '.jpeg' : null;
+
 
             TindakLanjut::create([
                 'pengaduan_id'   => $pengaduan->pengaduan_id,
                 'petugas'        => $faker->randomElement($petugasList),
                 'aksi'           => $aksi,
                 'catatan'        => $catatan,
-                'lampiran_bukti' => $lampiran,
+
             ]);
         }
     }

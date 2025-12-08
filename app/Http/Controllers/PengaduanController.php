@@ -84,22 +84,68 @@ class PengaduanController extends Controller
                 // Folder penyimpanan bisa Anda tentukan: 'pengaduan'
 
                 $fileName = time() . '_' . $file->getClientOriginalName();
-                $path     = $file->storeAs('pengaduan', $fileName, 'public');
+                $path     = $file->store('pengaduan', 'public');
 
                 // Simpan metadata ke tabel media menggunakan relasi morphMany (polimorfik)
-                $pengaduan->media()->create([
+                Media::create([
                     'ref_table'  => 'pengaduan',
                     'ref_id'     => $pengaduan->pengaduan_id,
                     'file_name'  => $fileName,
                     'mime_type'  => $file->getClientMimeType(),
                     'sort_order' => $sortOrder++,
-                    'caption'    => null, // Bisa diisi dari form jika ada
+                    'caption'    => null,
                 ]);
             }
         }
 
         // 4. REDIRECT & FLASH DATA
         return redirect()->route('pengaduan.index')->with('success', 'Pengaduan dengan nomor tiket ' . $nomorTiket . ' berhasil diajukan!');
+    }
+    public function edit($pengaduan_id)
+    {
+        // Load pengaduan + relasi media
+        $pengaduan = Pengaduan::with('media')->findOrFail($pengaduan_id);
+
+        // View khusus edit gambar
+        return view('pages.pengaduan.edit', compact('pengaduan'));
+    }
+    public function update(Request $request, $pengaduan_id)
+    {
+        $pengaduan = Pengaduan::findOrFail($pengaduan_id);
+
+        // Validasi: hanya gambar
+        $validated = $request->validate([
+            'lampiran_bukti'   => 'nullable',
+            'lampiran_bukti.*' => 'image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        // Jika user upload gambar baru
+        if ($request->hasFile('lampiran_bukti')) {
+
+            // Ambil sort order terakhir
+            $sort = Media::where('ref_table', 'pengaduan')
+                ->where('ref_id', $pengaduan->pengaduan_id)
+                ->max('sort_order') + 1;
+
+            foreach ($request->file('lampiran_bukti') as $file) {
+
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $file->storeAs('pengaduan', $fileName, 'public');
+
+                Media::create([
+                    'ref_table'  => 'pengaduan',
+                    'ref_id'     => $pengaduan->pengaduan_id,
+                    'file_name'  => $fileName,
+                    'mime_type'  => $file->getClientMimeType(),
+                    'sort_order' => $sort++,
+                    'caption'    => null,
+                ]);
+            }
+        }
+
+        return redirect()
+            ->route('pengaduan.show', $pengaduan_id)
+            ->with('success', 'Gambar pengaduan berhasil diperbarui.');
     }
 
     public function destroy($pengaduan_id)
