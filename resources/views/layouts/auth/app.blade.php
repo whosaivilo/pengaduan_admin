@@ -34,7 +34,11 @@
                 <div
                     class="col-lg-7 col-md-6 d-none d-md-flex align-items-center justify-content-center position-relative bg-section text-white">
                     <div class="bg-overlay"></div>
+
                     <div class="content-wrapper d-flex flex-column align-items-center justify-content-center">
+                        <img src="{{ asset('assets/logo.png') }}" alt="Logo Bina Desa"
+                            style="width:300px; margin-bottom:20px;">
+
                         <h2>Bina Desa</h2>
                         <p style="max-width:400px;">
                             Website <strong>Pengaduan dan Aspirasi Warga</strong> untuk memudahkan warga menyampaikan

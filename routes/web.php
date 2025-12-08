@@ -44,7 +44,7 @@ Route::middleware(['checklogin'])->group(function () {
     | ROUTE KHUSUS USER BIASA
     |--------------------------------------------------------------------------
     */
-    Route::middleware(['checkrole:user'])->group(function () {
+  Route::middleware(['checkrole:admin,user'])->group(function () {
 
         Route::resource('pengaduan', PengaduanController::class);
         Route::resource('warga', WargaController::class);
