@@ -28,7 +28,6 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        //1. Validasi Data
         $validated = $request->validate([
             'name'            => 'required|string|max:100',
             'email'           => 'required|email|unique:users,email',
@@ -37,18 +36,19 @@ class UserController extends Controller
             'role'            => 'required|string|in:admin,user',
         ]);
 
-        //2. Hash Password
+        // Hash password
         $validated['password'] = Hash::make($request->password);
 
+        // Upload foto (jika ada)
         if ($request->hasFile('profile_picture')) {
             $validated['profile_picture'] = $request->file('profile_picture')
                 ->store('profile_pictures', 'public');
         }
 
-        //3. Simpan Data
         User::create($validated);
 
-        return redirect()->route('user.index')->with('success', 'User ' . $validated['name'] . ' berhasil ditambahkan!');
+        return redirect()->route('user.index')
+            ->with('success', 'User ' . $validated['name'] . ' berhasil ditambahkan!');
     }
 
     public function edit($id)

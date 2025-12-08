@@ -68,19 +68,8 @@
                                 <td>{{ $user->id }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>
-                                    @if ($user->profile_picture)
-                                        @if (filter_var($user->profile_picture, FILTER_VALIDATE_URL))
-                                            {{-- Kalau URL eksternal --}}
-                                            <img src="{{ $user->profile_picture }}" width="50" height="50"
-                                                style="object-fit:cover;border-radius:50%;">
-                                        @else
-                                            {{-- Kalau tersimpan di storage lokal --}}
-                                            <img src="{{ asset('storage/' . $user->profile_picture) }}" width="50"
-                                                height="50" style="object-fit:cover;border-radius:50%;">
-                                        @endif
-                                    @else
-                                        <span>-</span>
-                                    @endif
+                                    <img src="{{ $user->profile_picture_url }}" width="50" height="50"
+                                        style="object-fit:cover;border-radius:50%;">
                                 </td>
                                 <td>{{ $user->email }}</td>
                                 <td>

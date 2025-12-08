@@ -72,5 +72,21 @@ class User extends Authenticatable
 
         return $query;
     }
+    public function getProfilePictureUrlAttribute()
+    {
+        // Jika user upload foto → pakai itu
+        if ($this->profile_picture) {
+            // Kalau URL eksternal
+            if (filter_var($this->profile_picture, FILTER_VALIDATE_URL)) {
+                return $this->profile_picture;
+            }
+
+            // Kalau file lokal
+            return asset('storage/' . $this->profile_picture);
+        }
+
+        // DEFAULT placeholder
+        return asset('assets/img/user.jpeg');
+    }
 
 }
