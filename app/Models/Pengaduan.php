@@ -46,6 +46,12 @@ class Pengaduan extends Model
 
     }
 
+    public function tindak_lanjut()
+    {
+        return $this->hasMany(TindakLanjut::class, 'pengaduan_id', 'pengaduan_id')
+            ->orderBy('tindak_id');
+    }
+
     public function scopeFilter(Builder $query, $request, array $filterableColumns): Builder
     {
         foreach ($filterableColumns as $column) {
