@@ -46,7 +46,7 @@ class KategoriPengaduanController extends Controller
         $validated = $request->validate([
             'nama'      => 'required|string|max:100|unique:kategori_pengaduan,nama,' . $id . ',kategori_id', // <-- PERBAIKAN KRITIS
             'sla_hari'  => 'required|integer|min:1',
-            'prioritas' => 'required|in:Urgent,Important,Not Urgent,Not Important',
+            'prioritas' => 'required|in:Tinggi,Sedang,Rendah',
         ], [
             'nama.required'      => 'Nama kategori wajib diisi',
             'nama.string'        => 'Nama kategori harus berupa teks',

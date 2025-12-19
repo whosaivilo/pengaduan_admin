@@ -57,7 +57,7 @@
                                  style="max-height: 160px; object-fit: cover;">
 
                             {{-- Tombol Hapus Gambar --}}
-                            <form action="{{ route('pengaduan.media.delete', $media->media_id) }}"
+                            <form action="{{ route('media.delete', $media->media_id) }}"
                                   method="POST"
                                   onsubmit="return confirm('Hapus gambar ini?')">
                                 @csrf

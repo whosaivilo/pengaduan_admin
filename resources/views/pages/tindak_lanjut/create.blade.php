@@ -83,7 +83,7 @@
                             </label>
 
                             <input type="file" class="form-control bg-dark @error('lampiran_bukti') is-invalid @enderror"
-                                id="lampiran_bukti" name="lampiran_bukti[]" multiple accept="image/*" required>
+                                id="lampiran_bukti" name="lampiran_bukti[]" multiple>
 
                             @error('lampiran_bukti')
                                 <div class="invalid-feedback">{{ $message }}</div>

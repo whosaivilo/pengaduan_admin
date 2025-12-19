@@ -56,7 +56,7 @@
                                 class="img-thumbnail" alt="Lampiran">
                         </div>
                     @endif
-                    <input type="file" name="lampiran_bukti" id="lampiran_bukti" class="form-control">
+                    <input type="file" name="lampiran_bukti" id="lampiran_bukti" class="form-control" multiple>
                     @error('lampiran_bukti')
                         <div class="text-danger">{{ $message }}</div>
                     @enderror

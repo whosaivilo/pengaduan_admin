@@ -96,8 +96,20 @@ class TindakLanjutController extends Controller
             'petugas'          => 'required|string|max:100',
             'aksi'             => 'required|string',
             'catatan'          => 'nullable|string',
-            'lampiran_bukti'   => 'nullable|array',
-            'lampiran_bukti.*' => 'file|mimes:jpeg,jpg,png|max:2048',
+            'lampiran_bukti.*' => 'file|mimes:jpeg,jpg,png|max:4096',
+
+        ], [
+            'petugas.required'       => 'Nama petugas wajib diisi.',
+            'petugas.string'         => 'Nama petugas harus berupa teks.',
+            'petugas.max'            => 'Nama petugas maksimal 100 karakter.',
+            'aksi.required'          => 'Aksi tindak lanjut wajib diisi.',
+            'aksi.string'            => 'Aksi tindak lanjut harus berupa teks.',
+            'catatan.string'         => 'Catatan harus berupa teks.',
+            'lampiran_bukti.min'     => 'Minimal unggah 1 lampiran.',
+            'lampiran_bukti.*.file'  => 'Lampiran harus berupa file.',
+            'lampiran_bukti.*.mimes' => 'Format lampiran harus JPG atau PNG.',
+            'lampiran_bukti.*.max'   => 'Ukuran lampiran maksimal 4 MB.',
+
         ]);
 
         // 2. Temukan Tindak Lanjut berdasarkan ID
@@ -110,11 +122,16 @@ class TindakLanjutController extends Controller
 
         // 4. Cek apakah ada lampiran baru yang diunggah
         if ($request->hasFile('lampiran_bukti')) {
+
+            $files = $request->file('lampiran_bukti');
+            $files = is_array($files) ? $files : [$files];
+
             $sort = $tindakLanjut->media()->count() + 1;
-            foreach ($request->file('lampiran_bukti') as $file) {
+
+            foreach ($files as $file) {
 
                 $filename = time() . '_' . $file->getClientOriginalName();
-                $path     = $file->storeAs('tindak', $filename, 'public');
+                $file->storeAs('tindak', $filename, 'public');
 
                 $tindakLanjut->media()->create([
                     'ref_table'  => 'tindak_lanjut',
