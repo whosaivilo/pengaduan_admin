@@ -101,6 +101,7 @@
     {{-- js start --}}
     <!-- JavaScript Libraries -->
     @include('layouts.js')
+    @yield('scripts')
     {{-- js end --}}
 </body>
 
