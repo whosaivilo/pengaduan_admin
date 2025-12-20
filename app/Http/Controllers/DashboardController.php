@@ -14,9 +14,6 @@ class DashboardController extends Controller
             return redirect()->route('auth')->with('error', 'Silakan Login dulu');
         }
 
-        // =====================
-        // KARTU STATISTIK
-        // =====================
         $total_masuk       = Pengaduan::count();
         $belum_diproses    = Pengaduan::where('status', 'Diproses')->count();
         $selesai_ditangani = Pengaduan::where('status', 'Selesai')->count();
@@ -26,9 +23,6 @@ class DashboardController extends Controller
 
         $pengaduan_terbaru = Pengaduan::with('warga')->latest()->take(5)->get();
 
-        // =====================
-        // CHART STATUS
-        // =====================
         $chartStatus = [
             'Diproses' => $belum_diproses,
             'Selesai'  => $selesai_ditangani,
@@ -50,9 +44,7 @@ class DashboardController extends Controller
             $insightText  = 'Mayoritas pengaduan masih dalam proses. Diperlukan peningkatan kecepatan penanganan.';
             $insightClass = 'text-danger';
         }
-        // =====================
-// CHART PERSEBARAN WILAYAH (RT/RW)
-// =====================
+
         $wilayahPengaduan = Pengaduan::select(
             DB::raw("CONCAT('RT ', rt, ' / RW ', rw) as wilayah"),
             DB::raw('COUNT(*) as total')
