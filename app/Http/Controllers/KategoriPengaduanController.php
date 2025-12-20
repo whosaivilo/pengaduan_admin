@@ -12,7 +12,7 @@ class KategoriPengaduanController extends Controller
         $searchableColumns = ['nama', 'sla_hari'];
         $semua_kategori = KategoriPengaduan::filter($request, $filterableColumns)
             ->search($request, $searchableColumns)
-            ->paginate(3)
+            ->paginate(5)
             ->withQueryString()
             ->onEachSide(1);
         return view('pages.kategori.index', compact('semua_kategori'));
@@ -46,7 +46,7 @@ class KategoriPengaduanController extends Controller
         $validated = $request->validate([
             'nama'      => 'required|string|max:100|unique:kategori_pengaduan,nama,' . $id . ',kategori_id', // <-- PERBAIKAN KRITIS
             'sla_hari'  => 'required|integer|min:1',
-            'prioritas' => 'required|in:Tinggi,Sedang,Rendah',
+            'prioritas' => 'required|in:Urgent,Important,Not Urgent,Not Important',
         ], [
             'nama.required'      => 'Nama kategori wajib diisi',
             'nama.string'        => 'Nama kategori harus berupa teks',
