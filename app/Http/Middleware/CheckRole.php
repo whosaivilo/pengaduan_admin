@@ -13,13 +13,14 @@ class CheckRole
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-
-    public function handle($request, Closure $next, $roles)
+    public function handle(Request $request, Closure $next, string $role): Response
     {
-        $allowedRoles = explode(',', $roles); // contoh: admin,user
+        if (! Auth::check()) {
+            abort(403, 'Akses ditolak.');
+        }
 
-        if (! in_array(Auth::user()->role, $allowedRoles)) {
-            return abort(403, 'Akses ditolak.');
+        if (Auth::user()->role !== $role) {
+            abort(403, 'Akses ditolak.');
         }
 
         return $next($request);

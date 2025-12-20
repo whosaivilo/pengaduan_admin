@@ -31,9 +31,11 @@ Route::middleware(['checklogin'])->group(function () {
     Route::middleware(['checkrole:admin'])->group(function () {
 
         Route::resource('user', UserController::class);
+        Route::resource('pengaduan', PengaduanController::class);
         Route::resource('kategori', KategoriPengaduanController::class);
         Route::resource('penilaian', PenilaianLayananController::class);
         Route::resource('tindak_lanjut', TindakLanjutController::class);
+        Route::resource('warga', WargaController::class);
 
         Route::delete('/media/{id}', [TindakLanjutController::class, 'deleteMedia'])
             ->name('media.delete');
@@ -44,7 +46,7 @@ Route::middleware(['checklogin'])->group(function () {
     | ROUTE KHUSUS USER BIASA
     |--------------------------------------------------------------------------
     */
-  Route::middleware(['checkrole:admin,user'])->group(function () {
+    Route::middleware(['checkrole:user'])->group(function () {
 
         Route::resource('pengaduan', PengaduanController::class);
         Route::resource('warga', WargaController::class);
