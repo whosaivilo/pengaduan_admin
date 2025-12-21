@@ -34,6 +34,26 @@ class UserController extends Controller
             'password'        => 'required|string|min:6|confirmed',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'role'            => 'required|string|in:admin,user',
+        ], [
+            'name.required'         => 'Nama wajib diisi.',
+            'name.string'           => 'Nama harus berupa teks.',
+            'name.max'              => 'Nama maksimal 100 karakter.',
+
+            'email.required'        => 'Email wajib diisi.',
+            'email.email'           => 'Format email tidak valid.',
+            'email.unique'          => 'Email sudah terdaftar.',
+
+            'password.required'     => 'Password wajib diisi.',
+            'password.string'       => 'Password harus berupa teks.',
+            'password.min'          => 'Password minimal 6 karakter.',
+            'password.confirmed'    => 'Konfirmasi password tidak sesuai.',
+
+            'profile_picture.image' => 'File harus berupa gambar.',
+            'profile_picture.mimes' => 'Format gambar harus jpeg, png, jpg, atau gif.',
+            'profile_picture.max'   => 'Ukuran gambar maksimal 2 MB.',
+
+            'role.required'         => 'Role wajib dipilih.',
+
         ]);
 
         // Hash password

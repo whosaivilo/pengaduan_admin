@@ -83,12 +83,6 @@
                                 <td class="text-center align-middle">
                                     <div class="d-flex justify-content-center align-items-center gap-1">
 
-                                        {{-- Detail --}}
-                                        <a href="{{ route('kategori.show', $kategori->kategori_id) }}"
-                                            class="btn btn-sm btn-info">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
-
                                         {{-- Edit --}}
                                         <a href="{{ route('kategori.edit', $kategori->kategori_id) }}"
                                             class="btn btn-sm btn-warning">

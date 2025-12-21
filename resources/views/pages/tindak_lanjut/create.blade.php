@@ -3,15 +3,6 @@
 @section('title_page', 'Tambah Tindak Lanjut')
 
 @section('content')
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $e)
-                    <li>{{ $e }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
     <div class="container-fluid pt-4 px-4">
         <div class="row g-4 justify-content-center">
             <div class="col-sm-12 col-xl-8">

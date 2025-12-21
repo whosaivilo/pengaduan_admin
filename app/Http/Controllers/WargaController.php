@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 use App\Models\Warga;
 use Illuminate\Http\Request;
 
-
 class WargaController extends Controller
 {
     /**
@@ -14,11 +13,11 @@ class WargaController extends Controller
     {
         $filterableColumns = ['jenis_kelamin'];
         $searchableColumns = ['nama', 'agama', 'pekerjaan', 'telp', 'email'];
-        $semua_warga = Warga::filter($request, $filterableColumns)
-                                ->search($request, $searchableColumns)
-                                ->paginate(10)
-                                ->withQueryString()
-                                ->onEachSide(1);
+        $semua_warga       = Warga::filter($request, $filterableColumns)
+            ->search($request, $searchableColumns)
+            ->paginate(10)
+            ->withQueryString()
+            ->onEachSide(1);
         return view('pages.warga.index', compact('semua_warga'));
     }
 
@@ -40,10 +39,28 @@ class WargaController extends Controller
             'no_ktp'        => 'required|unique:warga|digits:16',
             'nama'          => 'required|string|max:100',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
-            'agama'         => 'required|string',
+            'agama'         => 'required|in:Islam,Kristen,Katolik,Hindu,Buddha,Konghucu',
             'pekerjaan'     => 'required|string',
             'telp'          => 'required|max:15',
             'email'         => 'nullable|email|max:100',
+        ], [
+            'no_ktp.required'        => 'Nomor KTP wajib diisi.',
+            'no_ktp.unique'          => 'Nomor KTP sudah terdaftar.',
+            'no_ktp.digits'          => 'Nomor KTP harus terdiri dari 16 digit angka.',
+            'nama.required'          => 'Nama wajib diisi.',
+            'nama.string'            => 'Nama harus berupa teks.',
+            'nama.max'               => 'Nama maksimal 100 karakter.',
+            'jenis_kelamin.required' => 'Jenis kelamin wajib dipilih.',
+            'jenis_kelamin.in'       => 'Jenis kelamin harus dipilih antara Laki-laki atau Perempuan.',
+            'agama.required'         => 'Agama wajib dipilih.',
+            'pekerjaan.required'     => 'Pekerjaan wajib diisi.',
+            'pekerjaan.string'       => 'Pekerjaan harus berupa teks.',
+            'pekerjaan.max'          => 'Pekerjaan maksimal 100 karakter.',
+            'telp.required'          => 'Nomor telepon wajib diisi.',
+            'telp.string'            => 'Nomor telepon harus berupa teks.',
+            'telp.max'               => 'Nomor telepon maksimal 15 karakter.',
+            'email.email'            => 'Format email tidak valid.',
+            'email.max'              => 'Email maksimal 100 karakter.',
         ]);
 
         // dd($validated);
@@ -70,27 +87,16 @@ class WargaController extends Controller
      */
     public function edit($warga_id) // [route: warga.edit]
     {
-        // 1. Ambil data Warga berdasarkan Primary Key (PK)
-        //    findOrFail akan menampilkan 404 jika data tidak ditemukan
-        $warga = Warga::findOrFail($warga_id);
 
-        // 2. Tampilkan View Form Edit
-        //    View ini sama dengan form create, tapi diisi data lama
+        $warga = Warga::findOrFail($warga_id);
         return view('pages.warga.edit', compact('warga'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $warga_id) //[route: warga.update]
+    public function update(Request $request, $warga_id)
     {
-        // 1. Cari data Warga yang akan diupdate
         $warga = Warga::findOrFail($warga_id);
 
-        // 2. VALIDATION (Wajib Tugas)
-        //    Penting: Tambahkan pengecualian unik untuk NIK (no_ktp)
         $validated = $request->validate([
-            // Abaikan NIK (no_ktp) yang sedang diedit (PK adalah warga_id)
             'no_ktp'        => 'required|digits:16|unique:warga,no_ktp,' . $warga_id . ',warga_id',
             'nama'          => 'required|string|max:100',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
@@ -100,26 +106,21 @@ class WargaController extends Controller
             'email'         => 'nullable|email',
         ]);
 
-            // 3. Simpan Perubahan ke Database
-            $warga->update($validated);
+        $warga->update($validated);
 
-            // 4. REDIRECT & FLASH DATA (Wajib Tugas)
-            return redirect()->route('warga.index')->with('success', 'Data warga **' . $warga->nama . '** berhasil diperbarui!');
-        }
+        return redirect()->route('warga.index')->with('success', 'Data warga ' . $warga->nama . ' berhasil diperbarui!');
+    }
 
-            /**
-             * Remove the specified resource from storage.
-             */
-            public function destroy($warga_id)
+    public function destroy($warga_id)
     {
-                // 1. Cari data Warga yang akan dihapus
-                $warga = Warga::findOrFail($warga_id);
-                // $nama_warga = $warga->nama; // Simpan nama untuk Flash Data
+        // 1. Cari data Warga yang akan dihapus
+        $warga = Warga::findOrFail($warga_id);
+        // $nama_warga = $warga->nama; // Simpan nama untuk Flash Data
 
-                // 2. Hapus Data
-                $warga->delete();
+        // 2. Hapus Data
+        $warga->delete();
 
-                // 3. REDIRECT & FLASH DATA (Wajib Tugas)
-                return redirect()->route('warga.index')->with('success', 'Data warga **' . $warga->nama . '** berhasil dihapus!');
-            }
-        }
+        // 3. REDIRECT & FLASH DATA (Wajib Tugas)
+        return redirect()->route('warga.index')->with('success', 'Data warga **' . $warga->nama . '** berhasil dihapus!');
+    }
+}

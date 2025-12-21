@@ -40,6 +40,20 @@ class TindakLanjutController extends Controller
             'lampiran_bukti'   => 'required|array',
             'lampiran_bukti.*' => 'file|mimes:jpeg,jpg,png|max:4096',
 
+        ],[
+            'pengaduan_id.required'     => 'Pengaduan wajib dipilih.',
+            'pengaduan_id.exists'       => 'Pengaduan tidak ditemukan.',
+            'petugas.required'          => 'Nama petugas wajib diisi.',
+            'petugas.string'            => 'Nama petugas harus berupa teks.',
+            'petugas.max'               => 'Nama petugas maksimal 100 karakter.',
+            'aksi.required'             => 'Aksi tindak lanjut wajib diisi.',
+            'aksi.string'               => 'Aksi tindak lanjut harus berupa teks.',
+            'catatan.string'            => 'Catatan harus berupa teks.',
+            'lampiran_bukti.required'   => 'Minimal unggah 1 lampiran.',
+            'lampiran_bukti.array'      => 'Lampiran harus berupa array file.',
+            'lampiran_bukti.*.file'     => 'Lampiran harus berupa file.',
+            'lampiran_bukti.*.mimes'    => 'Format lampiran harus JPG atau PNG.',
+            'lampiran_bukti.*.max'      => 'Ukuran lampiran maksimal 4 MB.',
         ]);
 
         // 2. SIMPAN TINDAK ANJUT UTAMA (Harus dilakukan terlebih dahulu dan selalu)
