@@ -74,7 +74,7 @@
 
                         {{-- 4. password_confirmation Password --}}
                         <div class="mb-3">
-                            <label for="password_confirmation" class="form-label">Password<span
+                            <label for="password_confirmation" class="form-label">Konfirmasi Password<span
                                     class="text-danger">*</span></label>
                             <input type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
                                 id="password_confirmation" name="password_confirmation"

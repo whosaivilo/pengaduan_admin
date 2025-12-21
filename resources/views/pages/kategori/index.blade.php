@@ -41,7 +41,7 @@
                                 <input type="text" name="search" class="form-control" id="exampleInputIconRight"
                                     value="{{ request('search') }}" placeholder="Search" aria-label="Search">
                                 <button type="submit" class="input-group-text" id="basic-addon2">
-                                   <i class="fa fa-search"></i>
+                                    <i class="fa fa-search"></i>
                                 </button>
                                 @if (request('search'))
                                     <a href="{{ request()->fullUrlWithQuery(['search' => null]) }}" class="btn btn-primary"
@@ -80,15 +80,24 @@
                                     <span class="badge {{ $badgeClass }}">{{ $kategori->prioritas }}</span>
                                 </td>
                                 {{-- KOLOM 6: AKSI --}}
-                                <td>
-                                    {{-- Tambahkan d-flex di <td> atau bungkus dalam div d-flex --}}
-                                    <div class="d-flex">
-                                        <a class="btn btn-sm btn-info me-1"
-                                            href="{{ route('kategori.edit', $kategori->kategori_id) }}">
-                                            <i class="fa fa-eye"></i></a>
+                                <td class="text-center align-middle">
+                                    <div class="d-flex justify-content-center align-items-center gap-1">
 
+                                        {{-- Detail --}}
+                                        <a href="{{ route('kategori.show', $kategori->kategori_id) }}"
+                                            class="btn btn-sm btn-info">
+                                            <i class="fa fa-eye"></i>
+                                        </a>
+
+                                        {{-- Edit --}}
+                                        <a href="{{ route('kategori.edit', $kategori->kategori_id) }}"
+                                            class="btn btn-sm btn-warning">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+
+                                        {{-- Hapus --}}
                                         <form action="{{ route('kategori.destroy', $kategori->kategori_id) }}"
-                                            method="POST">
+                                            method="POST" class="m-0 p-0">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm btn-danger"
@@ -96,14 +105,16 @@
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         </form>
+
                                     </div>
                                 </td>
+
                             </tr>
                         @empty
                         @endforelse
                     </tbody>
                 </table>
-                <div class="mt-3">
+                <div class="mt-3">D
                     {{ $semua_kategori->links('pagination::bootstrap-5') }}
                 </div>
             </div>

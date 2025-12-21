@@ -28,6 +28,16 @@ class KategoriPengaduanController extends Controller
             'nama'      => 'required|string|max:100|unique:kategori_pengaduan,nama',
             'sla_hari'  => 'required|integer|min:1',
             'prioritas' => 'required|in:Tinggi,Sedang,Rendah',
+        ],[
+            'nama.required'      => 'Nama kategori wajib diisi',
+            'nama.string'        => 'Nama kategori harus berupa teks',
+            'nama.max'           => 'Nama kategori maksimal 100 karakter',
+            'nama.unique'        => 'Nama kategori sudah ada digunakan',
+            'sla_hari.required'  => 'SLA hari wajib diisi',
+            'sla_hari.integer'   => 'SLA hari harus berupa angka',
+            'sla_hari.min'       => 'SLA hari minimal 1 hari',
+            'prioritas.required' => 'Prioritas wajib diisi',
+            'prioritas.in'       => 'Prioritas tidak valid',
         ]);
 
         KategoriPengaduan::create($validated);

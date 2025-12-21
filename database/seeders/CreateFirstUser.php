@@ -18,6 +18,7 @@ class CreateFirstUser extends Seeder
             'name' => 'Admin User',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('qwerty123'),
+            'role' => 'admin',
         ]);
     }
 }

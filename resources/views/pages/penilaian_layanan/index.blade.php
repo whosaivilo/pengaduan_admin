@@ -2,7 +2,8 @@
 @section('title_page', 'Penilaian Layanan')
 @section('content')
     <div class="container-fluid pt-4 px-4">
-        <div class="bg-secondary text-center rounded p-4">
+        <div class="bg-secondary text-center rounded p-4 mb-5">
+
 
             {{-- HEADER --}}
             <div class="d-flex align-items-center justify-content-between mb-4">
@@ -44,7 +45,7 @@
                                 <input type="text" name="search" class="form-control" id="exampleInputIconRight"
                                     value="{{ request('search') }}" placeholder="Search" aria-label="Search">
                                 <button type="submit" class="input-group-text" id="basic-addon2">
-                                   <i class="fa fa-search"></i>
+                                    <i class="fa fa-search"></i>
                                 </button>
                                 @if (request('search'))
                                     <a href="{{ request()->fullUrlWithQuery(['search' => null]) }}" class="btn btn-primary"

@@ -19,38 +19,23 @@ Route::post('/auth/register', [AuthController::class, 'register'])->name('regist
 
 Route::middleware(['checklogin'])->group(function () {
 
-    // Dashboard → boleh diakses semua user yg login
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 
-    /*
-    |--------------------------------------------------------------------------
-    | ROUTE KHUSUS ADMIN
-    |--------------------------------------------------------------------------
-    */
-    Route::middleware(['checkrole:admin'])->group(function () {
+    Route::resource('pengaduan', PengaduanController::class);
+    Route::resource('warga', WargaController::class);
 
-        Route::resource('user', UserController::class);
-        Route::resource('pengaduan', PengaduanController::class);
-        Route::resource('kategori', KategoriPengaduanController::class);
+    Route::middleware(['checkrole:admin'])->group(function () {
         Route::resource('penilaian', PenilaianLayananController::class);
         Route::resource('tindak_lanjut', TindakLanjutController::class);
+        Route::resource('user', UserController::class);
+        Route::resource('kategori', KategoriPengaduanController::class);
+
         Route::resource('warga', WargaController::class);
 
         Route::delete('/media/{id}', [TindakLanjutController::class, 'deleteMedia'])
             ->name('media.delete');
     });
 
-    /*
-    |--------------------------------------------------------------------------
-    | ROUTE KHUSUS USER BIASA
-    |--------------------------------------------------------------------------
-    */
-    Route::middleware(['checkrole:user'])->group(function () {
-
-        Route::resource('pengaduan', PengaduanController::class);
-        Route::resource('warga', WargaController::class);
-
-    });
 
 });

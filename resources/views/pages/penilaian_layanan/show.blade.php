@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('title_page', 'Detail Penilaian Layanan')
 @section('content')
-    <div class="container-fluid pt-4 px-4">
+    <div class="container-fluid pt-4">
         <div class="col-sm-12 col-xl-10 mx-auto">
-            <div class="bg-secondary rounded p-4">
+            <div class="bg-secondary rounded p-3">
 
                 {{-- HEADER --}}
                 <div class="d-flex align-items-center justify-content-between mb-4">
@@ -109,17 +109,7 @@
                     </div>
                 </div>
 
-                {{-- ACTION BUTTON --}}
-                {{-- <div class="mt-4 pt-3 border-top">
-                    <form action="{{ route('penilaian.destroy', $penilaian->penilaian_id) }}" method="POST" class="d-inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger"
-                            onclick="return confirm('Yakin ingin menghapus penilaian ini?')">
-                            <i class="fa fa-trash me-2"></i>Hapus Penilaian
-                        </button>
-                    </form>
-                </div> --}}
+
 
             </div>
         </div>

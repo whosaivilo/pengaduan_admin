@@ -12,10 +12,10 @@
             </ul>
         </div>
     @endif
-    <div class="container-fluid pt-4 px-4">
-        <div class="row g-4 justify-content-center">
-            <div class="col-sm-12 col-xl-8">
-                <div class="bg-secondary rounded h-100 p-4">
+    <div class="container-fluid pt-4">
+        <div class="row justify-content-center">
+          <div class="col-sm-12 col-xl-7">
+                <div class="bg-secondary rounded p-3">
                     <h6 class="mb-4">Formulir Penilaian Layanan</h6>
 
                     {{-- FORM ACTION --}}
