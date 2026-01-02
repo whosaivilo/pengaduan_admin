@@ -17,16 +17,13 @@
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             @if (Auth::check())
-                                <img class="rounded-circle"
-                                    src="{{ asset('storage/' . Auth::user()->profile_picture) }}" alt="Profile"
+                                <img class="rounded-circle" src="{{ Auth::user()->profile_picture_url }}" alt="Profile"
                                     style="width:40px; height:40px; object-fit:cover;">
                                 <span class="d-none d-lg-inline-flex">
                                     {{ Auth::user()->name }}
                                 </span>
-                            @else
-                                <img class="rounded-circle" src="{{ asset('default/avatar.png') }}" alt="Guest"
-                                    style="width:40px; height:40px; object-fit:cover;">
                             @endif
+
                         </a>
 
                         @if (Auth::check())

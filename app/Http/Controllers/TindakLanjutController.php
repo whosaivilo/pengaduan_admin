@@ -105,8 +105,7 @@ class TindakLanjutController extends Controller
 
     public function update(Request $request, $id)
     {
-        // 1. Validasi
-        $validated = $request->validate([
+          $validated = $request->validate([
             'petugas'          => 'required|string|max:100',
             'aksi'             => 'required|string',
             'catatan'          => 'nullable|string',
