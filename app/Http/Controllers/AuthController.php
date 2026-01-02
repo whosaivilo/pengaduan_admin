@@ -20,6 +20,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
+            // 'name'     => 'required|string|max:100',
             'email'    => 'required|email',
             'password' => 'required|min:6',
         ], [
@@ -76,7 +77,7 @@ class AuthController extends Controller
         User::create($users);
 
         //Redirect ke halaman login dengan pesan sukses
-        return redirect()->route('daftar')->with('success', 'Pendaftaran Berhasil! Silakan login ulang!');
+        return redirect()->route('auth')->with('success', 'Pendaftaran Berhasil! Silakan login ulang!');
     }
     public function logout(Request $request)
     {

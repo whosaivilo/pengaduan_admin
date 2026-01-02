@@ -73,7 +73,6 @@ class UserController extends Controller
 
     public function edit($id)
     {
-        // Terapkan User::findOrfail($id) [cite: 15]
         $user = User::findOrFail($id);
         return view('pages.user.edit', compact('user'));
     }
@@ -81,29 +80,23 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
-
         $rules = [
-            // Rule unique email: Wajib mengabaikan user dengan ID saat ini ($user->id)
+
             'name'            => 'required|string|max:100',
             'email'           => 'required|email|unique:users,email,' . $user->id,
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'role'            => 'required|in:admin,user',
         ];
 
-        // 2. BLOK IF PERTAMA: Tambahkan aturan Password HANYA JIKA field diisi di form
         if ($request->filled('password')) {
-            // Jika password diisi, terapkan semua aturan password
             $rules['password'] = 'required|string|min:6|confirmed';
         }
 
-        // 3. JALANKAN VALIDASI dengan aturan yang sudah diperbarui
         $validated = $request->validate($rules);
 
         if ($request->filled('password')) {
-            // HASH password baru sebelum diupdate
             $validated['password'] = Hash::make($request->password);
         } else {
-            // Hapus field password dari $validated agar tidak diupdate
             unset($validated['password']);
         }
         if ($request->hasFile('profile_picture')) {
@@ -115,10 +108,7 @@ class UserController extends Controller
             $validated['profile_picture'] = $request->file('profile_picture')
                 ->store('profile_pictures', 'public');
         }
-
-        // 5. UPDATE DATA
         $user->update($validated);
-
         return redirect()->route('user.index')->with('success', 'Data user ' . $user->name . ' berhasil diupdate!');
     }
 

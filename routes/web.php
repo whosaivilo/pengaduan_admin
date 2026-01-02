@@ -26,9 +26,9 @@ Route::middleware(['checklogin'])->group(function () {
     Route::resource('warga', WargaController::class);
 
     Route::middleware(['checkrole:admin'])->group(function () {
+        Route::resource('user', UserController::class);
         Route::resource('tindak_lanjut', TindakLanjutController::class);
         Route::resource('penilaian', PenilaianLayananController::class);
-        Route::resource('user', UserController::class);
         Route::resource('kategori', KategoriPengaduanController::class);
 
         Route::resource('warga', WargaController::class);
