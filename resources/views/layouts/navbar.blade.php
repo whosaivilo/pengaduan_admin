@@ -32,9 +32,7 @@
                         @if (Auth::check())
                             <div
                                 class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-                                <a href="#" class="dropdown-item">My Profile</a>
                                 <a href="#" class="dropdown-item">Last login: {{ session('last_login') }}</a>
-                                <a href="#" class="dropdown-item">Settings</a>
 
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
