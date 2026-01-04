@@ -108,7 +108,7 @@
                         @endforelse
                     </tbody>
                 </table>
-                <div class="mt-3">D
+                <div class="mt-3">
                     {{ $semua_kategori->links('pagination::bootstrap-5') }}
                 </div>
             </div>

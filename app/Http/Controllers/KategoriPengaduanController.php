@@ -25,7 +25,7 @@ class KategoriPengaduanController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'nama'      => 'required|string|max:100|unique:kategori_pengaduan,nama',
+            'nama'      => 'required|string|regex:/[a-zA-Z]/|max:100|unique:kategori_pengaduan,nama',
             'sla_hari'  => 'required|integer|min:1',
             'prioritas' => 'required|in:Tinggi,Sedang,Rendah',
         ],[
@@ -53,13 +53,14 @@ class KategoriPengaduanController extends Controller
     public function update(Request $request, $id)
     {
         $validated = $request->validate([
-            'nama'      => 'required|string|max:100|unique:kategori_pengaduan,nama,' . $id . ',kategori_id',
+            'nama'      => 'required|string|max:100|regex:/[a-zA-Z]/|unique:kategori_pengaduan,nama,' . $id . ',kategori_id',
             'sla_hari'  => 'required|integer|min:1',
             'prioritas' => 'required|in:Tinggi,Sedang,Rendah',
         ], [
             'nama.required'      => 'Nama kategori wajib diisi',
             'nama.string'        => 'Nama kategori harus berupa teks',
             'nama.max'           => 'Nama kategori maksimal 100 karakter',
+            'nama.regex'         => 'Nama kategori harus mengandung huruf',
             'nama.unique'        => 'Nama kategori sudah ada dalam database',
             'sla_hari.required'  => 'SLA hari wajib diisi',
             'sla_hari.integer'   => 'SLA hari harus berupa angka',

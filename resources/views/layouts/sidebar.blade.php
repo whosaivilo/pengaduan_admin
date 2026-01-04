@@ -1,11 +1,12 @@
 @if (Auth::check())
     <div class="sidebar pe-4 pb-3">
-        <nav class="navbar bg-secondary navbar-dark">
-            <a href="{{ route('dashboard') }}" class="navbar-brand mx-4 mb-3">
-                <img src="{{ asset('assets/img/logo.png') }}" alt="Logo Bina Desa"
-                    style="width:190px; margin-bottom:1  0px;">
+        <nav class="navbar bg-secondary navbar-dark flex-column align-items-stretch">
 
-            </a>
+            <div class="sidebar-logo text-center mb-4">
+                <a href="{{ route('dashboard') }}">
+                    <img src="{{ asset('assets/img/logo.png') }}" alt="Logo Bina Desa" class="img-fluid sidebar-logo-img">
+                </a>
+            </div>
             <div class="d-flex align-items-center ms-4 mb-4">
                 <div class="position-relative">
                     <img class="rounded-circle" src="{{ Auth::user()->profile_picture_url }}" alt="Profile"

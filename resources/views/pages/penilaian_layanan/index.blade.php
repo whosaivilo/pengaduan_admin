@@ -58,35 +58,36 @@
                 </form>
                 <table class="table text-start align-middle table-bordered table-hover mb-0">
                     <thead>
-                        <tr class="text-white">
+                        <tr class="text-white text-center">
                             <th>#</th>
                             <th>Pengaduan ID</th>
                             <th>Rating</th>
                             <th>Komentar</th>
-                            <th>Aksi</th>
+                            <th >Aksi</th>
                         </tr>
                     </thead>
 
                     <tbody>
                         @forelse ($semua_penilaian as $item)
                             <tr>
-                                <td>{{ ($semua_penilaian->currentPage() - 1) * $semua_penilaian->perPage() + $loop->iteration }}
+                                <td class="text-center">{{ ($semua_penilaian->currentPage() - 1) * $semua_penilaian->perPage() + $loop->iteration }}
                                 </td>
 
                                 {{-- Link detail pengaduan --}}
-                                <td>
+                                <td class="text-center">
                                     <a href="{{ route('pengaduan.show', $item->pengaduan_id) }}" class="text-danger">
                                         #{{ $item->pengaduan_id }}
                                     </a>
                                 </td>
 
-                                <td>{{ $item->rating }} / 5</td>
+                                <td class="text-center">{{ $item->rating }} / 5</td>
 
                                 <td>{{ Str::limit($item->komentar, 50) }}</td>
 
 
 
-                                <td>
+                                <td class="text-center align-middle">
+                                    <div class="d-flex justify-content-center align-items-center gap-1">
                                     <a href="{{ route('penilaian.show', $item->penilaian_id) }}"
                                         class="btn btn-sm btn-info">
                                         <i class="fa fa-eye"></i>
@@ -101,6 +102,8 @@
                                             <i class="fa fa-trash"></i>
                                         </button>
                                     </form>
+
+                                    </div>
                                 </td>
                             </tr>
 

@@ -8,7 +8,8 @@
 
             <h4 class="mb-4">Edit Pengaduan</h4>
 
-            <form action="{{ route('pengaduan.update', $pengaduan->pengaduan_id) }}" method="POST">
+            <form action="{{ route('pengaduan.update', $pengaduan->pengaduan_id) }}" method="POST"
+                enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
 
@@ -96,14 +97,10 @@
                                         class="img-fluid rounded mb-2" style="max-height: 160px; object-fit: cover;">
 
                                     {{-- Tombol Hapus Gambar --}}
-                                    <form action="{{ route('media.delete', $media->media_id) }}" method="POST"
-                                        onsubmit="return confirm('Hapus gambar ini?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn btn-sm btn-danger w-100">
-                                            <i class="fa fa-trash"></i> Hapus
-                                        </button>
-                                    </form>
+                                    <button type="button" class="btn btn-sm btn-danger w-100"
+                                        onclick="if(confirm('Hapus gambar ini?')) document.getElementById('delete-media-{{ $media->media_id }}').submit();">
+                                        <i class="fa fa-trash"></i> Hapus
+                                    </button>
                                 </div>
                             </div>
                         @endforeach
@@ -114,29 +111,30 @@
                 <div class="mb-4">
                     <h6>Tambah Gambar Baru</h6>
 
-                    <form action="{{ route('pengaduan.update', $pengaduan->pengaduan_id) }}" method="POST"
-                        enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label class="form-label">Upload Gambar (bisa lebih dari satu)</label>
+                        <input type="file" name="lampiran_bukti[]" class="form-control bg-dark text-white" multiple>
+                        <small class="text-info">Format: JPG/PNG, max 2MB per gambar.</small>
+                    </div>
 
-                        @csrf
-                        @method('PUT')
+                    <button type="submit" class="btn btn-primary mt-2">
+                        <i class="fa fa-save"></i> Simpan Perubahan
+                    </button>
 
-                        <div class="mb-3">
-                            <label class="form-label">Upload Gambar (bisa lebih dari satu)</label>
-                            <input type="file" name="lampiran_bukti[]" class="form-control bg-dark text-white" multiple>
-                            <small class="text-info">Format: JPG/PNG, max 2MB per gambar.</small>
-                        </div>
+                    <a href="{{ route('pengaduan.show', $pengaduan->pengaduan_id) }}" class="btn btn-light mt-2">
+                        Kembali
+                    </a>
 
-                        <button type="submit" class="btn btn-primary mt-2">
-                            <i class="fa fa-save"></i> Simpan Perubahan
-                        </button>
-
-                        <a href="{{ route('pengaduan.show', $pengaduan->pengaduan_id) }}" class="btn btn-light mt-2">
-                            Kembali
-                        </a>
-                    </form>
                 </div>
 
             </form>
+            @foreach ($pengaduan->media as $media)
+                <form id="delete-media-{{ $media->media_id }}" action="{{ route('media.delete', $media->media_id) }}"
+                    method="POST" style="display:none;">
+                    @csrf
+                    @method('DELETE')
+                </form>
+            @endforeach
 
         </div>
     </div>

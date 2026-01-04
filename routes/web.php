@@ -18,12 +18,12 @@ Route::get('/auth/register', [AuthController::class, 'daftar'])->name('daftar');
 Route::post('/auth/register', [AuthController::class, 'register'])->name('register'); //Memproses halaman register
 
 Route::middleware(['checklogin'])->group(function () {
+    Route::resource('warga', WargaController::class);
 
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 
     Route::resource('pengaduan', PengaduanController::class);
-    Route::resource('warga', WargaController::class);
 
     Route::middleware(['checkrole:admin'])->group(function () {
         Route::resource('user', UserController::class);
@@ -35,7 +35,10 @@ Route::middleware(['checklogin'])->group(function () {
 
         Route::delete('/media/{id}', [TindakLanjutController::class, 'deleteMedia'])
             ->name('media.delete');
-    });
+        Route::delete('/pengaduan/media/{media}',
+            [PengaduanController::class, 'deleteMedia']
+        )->name('pengaduan.media.delete');
 
+    });
 
 });

@@ -9,7 +9,7 @@ class WargaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request) // [route: warga.index]
+    public function index(Request $request) 
     {
         $filterableColumns = ['jenis_kelamin'];
         $searchableColumns = ['nama', 'agama', 'pekerjaan', 'telp', 'email'];
@@ -29,12 +29,8 @@ class WargaController extends Controller
         return view('pages.warga.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request) // [route: warga.store]
+    public function store(Request $request) 
     {
-        // 1. VALIDATION
         $validated = $request->validate([
             'no_ktp'        => 'required|unique:warga|digits:16',
             'nama'          => 'required|string|max:100',
@@ -62,12 +58,7 @@ class WargaController extends Controller
             'email.email'            => 'Format email tidak valid.',
             'email.max'              => 'Email maksimal 100 karakter.',
         ]);
-
-        // dd($validated);
-        // 2. SIMPAN DATA
         Warga::create($validated);
-
-        // 3. REDIRECT & FLASH DATA
         return redirect()->route('warga.index')->with('success', 'Data warga **' . $validated['nama'] . '** berhasil ditambahkan!');
     }
 
@@ -77,15 +68,13 @@ class WargaController extends Controller
     public function show($warga_id)
     {
         $warga = Warga::findOrFail($warga_id);
-
-        // Mengirim objek $warga ke view detail
         return view('pages.warga.show', compact('warga'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit($warga_id) // [route: warga.edit]
+    public function edit($warga_id) 
     {
 
         $warga = Warga::findOrFail($warga_id);

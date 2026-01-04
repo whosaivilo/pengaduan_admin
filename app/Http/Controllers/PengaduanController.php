@@ -55,6 +55,8 @@ class PengaduanController extends Controller
                                                                        // PERBAIKAN PENTING: Validasi multiple file upload (gunakan array [] di input form)
             'lampiran_bukti'   => 'nullable',                          // Boleh null jika user tidak upload
             'lampiran_bukti.*' => 'image|mimes:jpeg,png,jpg|max:2048', // Validasi setiap file dalam array
+        ],[
+
         ]);
 
         $nomorTiket = 'PND' . now()->format('dHi') . Str::random(2);
@@ -107,6 +109,15 @@ class PengaduanController extends Controller
             'rw'               => 'required|digits_between:1,3',
             'lampiran_bukti'   => 'nullable',
             'lampiran_bukti.*' => 'image|mimes:jpeg,png,jpg|max:2048',
+        ], [
+            'judul.required'         => 'Judul pengaduan wajib diisi.',
+            'deskripsi.required'     => 'Deskripsi pengaduan wajib diisi.',
+            'lokasi_text.required'   => 'Lokasi wajib diisi.',
+            'rt.required'            => 'RT wajib diisi.',
+            'rw.required'            => 'RW wajib diisi.',
+            'lampiran_bukti.*.image' => 'File harus berupa gambar.',
+            'lampiran_bukti.*.mimes' => 'Format gambar harus JPG atau PNG.',
+            'lampiran_bukti.*.max'   => 'Ukuran gambar maksimal 2MB.',
         ]);
 
         // ================= UPDATE DATA UTAMA =================
@@ -129,7 +140,7 @@ class PengaduanController extends Controller
 
             foreach ($request->file('lampiran_bukti') as $file) {
 
-                $fileName = time() . '_' . uniqid() . '.' . $file->extension();
+                $fileName = time() . '_' . $file->getClientOriginalName();
 
                 $file->storeAs('pengaduan', $fileName, 'public');
 
@@ -167,4 +178,14 @@ class PengaduanController extends Controller
         return redirect()->route('pengaduan.index')
             ->with('success', 'Pengaduan berhasil dihapus, dan lampiran bukti telah dihapus!');
     }
+    public function deleteMedia($media_id)
+    {
+        $media = Media::findOrFail($media_id);
+
+        Storage::disk('public')->delete('pengaduan/' . $media->file_name);
+        $media->delete();
+
+        return back()->with('success', 'Gambar berhasil dihapus.');
+    }
+
 }
